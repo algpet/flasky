@@ -1,0 +1,52 @@
+<!doctype html>
+<title> Stocks ..</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body background="http://cdn.wallpapersafari.com/42/23/rNjDs2.jpg"  >
+
+    <div class="row">
+
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form method="post">
+                        <div class="panel">
+                            <label for="tickers">Stocks:</label>
+                            <input name="tickers" id="tickers" value="{{tickers or ''}}">
+
+                            <label for="from_date" >From:</label>
+                            <input name="from_date" id="from_date"  type="date" value="{{from_date}}">
+
+                            <label for="till_date">Till:</label>
+                            <input name="till_date" id="till_date"  type="date" value="{{till_date}}">
+
+                            <button name="submit" >Fetch!</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+            </div>
+
+
+            {% if error == none %}
+                error: {{error}}<br>
+            {% endif %}
+
+            {% if ticker_data is not none %}
+                {% for ticker in ticker_data %}
+                    <h4>{{ticker_headers[ticker]['name']}}</h4>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {{ticker_data[ticker].to_html(classes="table") | safe }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+</body>
