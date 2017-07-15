@@ -1,1 +1,1 @@
-web: gunicorn controllers --log-file -
+web: controllers.py
