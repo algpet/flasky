@@ -6,6 +6,9 @@ from stock_rate_service import TickerRateService
 from ticker_info_service import TickerInfoService
 from params_service import ParameterService
 
+tickerRateService = TickerRateService('google')
+tickerNameService = TickerInfoService('secwiki_tickers.csv')
+parameterService = ParameterService(10)
 app = Flask(__name__)
 
 
@@ -25,12 +28,7 @@ def request_form():
     return render_template('layout1.html', ticker_data=ticker_data, ticker_headers=ticker_headers,from_date=from_date,
                            till_date=till_date, tickers=tickers)
 
-
 if __name__ == "__main__":
-    tickerRateService = TickerRateService('google')
-    tickerNameService = TickerInfoService('secwiki_tickers.csv')
-    parameterService = ParameterService(10)
-
     app.run(debug=True, port=4999)
 
 
