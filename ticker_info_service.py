@@ -9,7 +9,7 @@ class TickerInfoService():
             self.data[info[0].upper()] = {"name":info[1] }
 
     def get_ticker_data(self,ticker):
-        if ticker.upper in self.data:
+        if ticker.upper() in self.data:
             return self.data[ticker.upper()]
         else:
             return self.UNKNOWN_TICKER
