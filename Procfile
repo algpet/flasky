@@ -1,1 +1,1 @@
-web: controllers.py
+web: python controllers.py
