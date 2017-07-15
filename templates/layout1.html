@@ -40,9 +40,15 @@
                 {% for ticker in ticker_data %}
                     <h4>{{ticker_headers[ticker]['name']}}</h4>
                     <div class="panel panel-default">
-                        <div class="panel-body">
-                            {{ticker_data[ticker].to_html(classes="table") | safe }}
-                        </div>
+                        {%if ticker_data[ticker] is not none%}
+                            <div class="panel-body">
+                                {{ticker_data[ticker].to_html(classes="table") | safe }}
+                            </div>
+                        {%else%}
+                             <div class="panel-body">
+                                 No data found
+                             </div>
+                       {% endif %}
                     </div>
                 {% endfor %}
             {% endif %}
