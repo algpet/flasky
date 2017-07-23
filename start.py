@@ -6,7 +6,7 @@ from context_builder import application_context_builder
 app = Flask(__name__)
 rawRequestController , fourYearAnalysisController = application_context_builder()
 
-
+@app.route("/", methods=['GET', 'POST'])
 @app.route("/iteration1and2", methods=['GET', 'POST'])
 def raw_requests():
     return rawRequestController.dispatch(request)
