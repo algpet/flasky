@@ -61,7 +61,7 @@ class TickerAnalysisService:
 
     def add_close_above_last_low_marker(self,df):
         df['close_above_last_low'] = self.MARKER_DEFAULT
-        df.loc[df['Close'] < df['Low'].shift(-1),'close_above_last_low'] = self.FITS_BITCH_MARKER
+        df.loc[df['Close'] > df['Low'].shift(-1),'close_above_last_low'] = self.FITS_BITCH_MARKER
         return df
 
     def add_bullish_marker(self,df):

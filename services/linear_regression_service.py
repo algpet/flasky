@@ -29,6 +29,7 @@ class LinearRegressionSerice:
         df = df[period[0]:period[1]]
         xi = np.arange(len(df))
         slope, intercept, r_value, p_value, std_err = stats.linregress(xi, df['Close'])
+        print(r_value,r_value ** 2)
         return {"slope":slope , "r_squared":r_value ** 2}
 
     def pack_to_dataframe(self,period_data):

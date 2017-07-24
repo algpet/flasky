@@ -20,6 +20,21 @@
                     <label for="till_date">Till:</label>
                     <input name="till_date" id="till_date"  type="date" value="{{till_date}}" readonly>
 
+                    <select name="up_down">
+                        <option>Up - bullish</option>
+                        <option>Down - Bearish</option>
+                        <option>Neutral</option>
+                    </select>
+
+                    <select name="regression">
+                        <option>Up - Regression is low</option>
+                        <option>Up - Regression is ok</option>
+                        <option>Up - Regression is great</option>
+                        <option>Down - Regression is low</option>
+                        <option>Down - Regression is ok</option>
+                        <option>Down - Regression is great</option>
+                    </select>
+
                     <button name="submit" >Fetch!</button>
                 </div>
             </form>
