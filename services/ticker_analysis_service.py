@@ -21,9 +21,9 @@ class TickerAnalysisService:
         df = self.add_volume_difference(df)
         df = self.add_volume_decrease_marker(df)
         df = self.add_high_raises_marker(df)
-        df = self.add_low_drops_marker(df)
+        df = self.add_low_raises_marker(df)
         df = self.add_close_below_last_high_marker(df)
-        df = self.add_close_above_last_low_marker(df)
+        df = self.add_close_above_last_close_marker(df)
         df = self.add_bullish_marker(df)
         df = self.add_bearish_marker(df)
 
@@ -44,24 +44,26 @@ class TickerAnalysisService:
         df.loc[df['volumediff'] < self.VOLUME_DECREASE_FITS_BITCH , 'volume_decrease'] = self.FITS_BITCH_MARKER
         return df
 
+
     def add_high_raises_marker(self,df):
         df['high_raises'] = self.MARKER_DEFAULT
         df.loc[df['High'] > df['High'].shift(-1),'high_raises'] = self.FITS_BITCH_MARKER
         return df
 
-    def add_low_drops_marker(self, df):
-        df['low_drops'] = self.MARKER_DEFAULT
-        df.loc[df['Low'] < df['Low'].shift(-1),'low_drops'] = self.FITS_BITCH_MARKER
+    def add_low_raises_marker(self, df):
+        df['low_raises'] = self.MARKER_DEFAULT
+        df.loc[df['Low'] > df['Low'].shift(-1),'low_raises'] = self.FITS_BITCH_MARKER
         return df
+
 
     def add_close_below_last_high_marker(self,df):
         df['close_below_last_high'] = self.MARKER_DEFAULT
         df.loc[df['Close'] < df['High'].shift(-1),'close_below_last_high'] = self.FITS_BITCH_MARKER
         return df
 
-    def add_close_above_last_low_marker(self,df):
-        df['close_above_last_low'] = self.MARKER_DEFAULT
-        df.loc[df['Close'] > df['Low'].shift(-1),'close_above_last_low'] = self.FITS_BITCH_MARKER
+    def add_close_above_last_close_marker(self,df):
+        df['close_above_last_close'] = self.MARKER_DEFAULT
+        df.loc[df['Close'] > df['Close'].shift(-1),'close_above_last_close'] = self.FITS_BITCH_MARKER
         return df
 
     def add_bullish_marker(self,df):
@@ -78,8 +80,8 @@ class TickerAnalysisService:
 
         df['FITS_BITCH_MARKER'] = self.FITS_BITCH_MARKER
         df.loc[(df['volume_decrease'] == df['FITS_BITCH_MARKER']) &
-               (df['low_drops'] == df['FITS_BITCH_MARKER']) &
-               (df['close_above_last_low'] == df['FITS_BITCH_MARKER']), 'bearish'] = 'BEARISH'
+               (df['low_raises'] == df['FITS_BITCH_MARKER']) &
+               (df['close_above_last_close'] == df['FITS_BITCH_MARKER']), 'bearish'] = 'BEARISH'
         return df
 
 

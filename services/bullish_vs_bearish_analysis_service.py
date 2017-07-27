@@ -3,13 +3,13 @@ class BullishVsBearishAnalysisService:
 
     def __init__(self):
         self.periods = {
-            "recent3month" : [0, 93],
-            "recent9month" : [0, 182],
-            "recent1year"  : [0, 252],
-            "recent4years" : [0, 1114],
-            "past3month" : [943, 1006],
-            "past9month" : [817, 1006],
-            "past1year"  : [608, 1008] # o_O
+            "recent3month" : [0, 94],
+            "recent9month" : [0, 183],
+            "recent1year"  : [0, 253],
+            "recent4years" : [0, 1115],
+            "past3month" : [943, 1007],
+            "past9month" : [817, 1007],
+            "past1year"  : [608, 1009] # o_O
         }
 
 

@@ -19,7 +19,6 @@ class FourYearAnalysisController:
         if request.method == 'POST':
             tickers, from_date, till_date = self.parameterService.process_params(request)
             tickers = tickers[0]
-            print("post",tickers, from_date, till_date)
             if not (tickers is None or from_date is None or till_date is None):
                 ticker_data = self.tickerRateService.get_rate(tickers, from_date, till_date)
                 ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
