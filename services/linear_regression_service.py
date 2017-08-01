@@ -10,9 +10,9 @@ class LinearRegressionSerice:
     def __init__(self):
 
         self.periods = {
-            "recent9month": [0, 188],
-            "recent1year": [0, 250],
-            "recent4years": [0, 1008]
+            "recent9month": [0, 189],
+            "recent1year": [0, 251],
+            "recent4years": [0, 1009]
         }
         pass
 
@@ -27,9 +27,13 @@ class LinearRegressionSerice:
 
     def calculate_slope_and_rsquare_for_period(self,df,period):
         df = df[period[0]:period[1]]
-        xi = np.arange(len(df))
-        slope, intercept, r_value, p_value, std_err = stats.linregress(xi, df['Close'])
-        print(r_value,r_value ** 2)
+        df = df.reindex(index=df.index[::-1])
+        df['Days'] = (df.index - df.index[0]).days
+        df = df[['Days','Close']]
+
+        #print(period)
+        #print(df)
+        slope, intercept, r_value, p_value, std_err = stats.linregress(df['Days'], df['Close'])
         return {"slope":slope , "r_squared":r_value ** 2}
 
     def pack_to_dataframe(self,period_data):
