@@ -21,10 +21,10 @@ class FourYearAnalysisController:
             tickers = tickers[0]
             if not (tickers is None or from_date is None or till_date is None):
                 ticker_data = self.tickerRateService.get_rate(tickers, from_date, till_date)
-                ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
-                bullish_vs_bearish_totals = self.tickerFourYearAnalysisService.analyze_dataframe(ticker_data)
-
-                slope_and_rsquare_totals = self.linearRegressionSerice.calculate_slope_and_rsquare(ticker_data)
+                if ticker_data is not None:
+                    ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
+                    bullish_vs_bearish_totals = self.tickerFourYearAnalysisService.analyze_dataframe(ticker_data)
+                    slope_and_rsquare_totals = self.linearRegressionSerice.calculate_slope_and_rsquare(ticker_data)
 
         return render_template('iteration3andProbably4.html', tickers = tickers, from_date=from_date, till_date= till_date,
                                bullish_vs_bearish_totals=bullish_vs_bearish_totals,
