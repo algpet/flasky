@@ -4,6 +4,8 @@ from services.ticker_info_service import TickerInfoService
 from services.stock_rate_service import TickerRateService
 from services.bullish_vs_bearish_analysis_service import BullishVsBearishAnalysisService
 from services.linear_regression_service import LinearRegressionSerice
+from services.volatility_analysis_service import VolatilityAnalysisService
+from services.price_change_analysis_service import PriceChangeAnalysisService
 
 from controllers.raw_request_controller import RawRequestController
 from controllers.four_year_analysis_controller import  FourYearAnalysisController
@@ -17,8 +19,12 @@ def application_context_builder():
     tickerAnalysisService = TickerAnalysisService()
     bullishVsBearishAnalysisService = BullishVsBearishAnalysisService()
     linearRegressionSerice = LinearRegressionSerice()
+    volatilityAnalysisService = VolatilityAnalysisService()
+
+    priceChangeAnalysisService = PriceChangeAnalysisService(volatilityAnalysisService)
 
     rawRequestController = RawRequestController(parameterService,tickerRateService,tickerAnalysisService, tickerNameService, "iteration1and2.html")
     fourYearAnalysisController = FourYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,
-                                                            bullishVsBearishAnalysisService, linearRegressionSerice, "iteration3andProbably4.html")
+                                                            bullishVsBearishAnalysisService, linearRegressionSerice,
+                                                            priceChangeAnalysisService, "iteration3andProbably4.html")
     return rawRequestController , fourYearAnalysisController
