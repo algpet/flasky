@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('Agg')
+
 from services.ticker_analysis_service import TickerAnalysisService
 from services.params_service import ParameterService
 from services.ticker_info_service import TickerInfoService
