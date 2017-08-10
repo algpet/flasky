@@ -1,7 +1,12 @@
 import scipy.stats as sct
 import random
-import matplotlib.pyplot as plt
 import math
+
+
+from matplotlib import use
+use("Agg")
+import matplotlib.pyplot as plt
+
 
 class PriceChangeAnalysisService:
 
