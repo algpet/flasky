@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+{% block title %}Stocks .. stocks .. stocks{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block active5 %}
+    class="active"
+{%endblock%}
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="post">
+                <div class="panel">
+                    <label for="tickers">Stocks:</label>
+                    <input name="tickers" id="tickers" value="{{tickers or ''}}">
+
+                    <label for="from_date" >From:</label>
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" >
+
+                    <label for="till_date">Till:</label>
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" >
+
+                    <button name="submit" >Simulate!</button>
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if test_img1 is not none %}
+
+            <div class="panel panel-default">
+                <img src="{{test_img1}}">
+                <img src="{{test_img2}}">
+            </div>
+
+        {% endif %}
+    </div>
+
+
+{% endblock %}

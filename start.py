@@ -4,7 +4,7 @@ from flask import request
 from context_builder import application_context_builder
 
 app = Flask(__name__)
-rawRequestController , fourYearAnalysisController = application_context_builder()
+rawRequestController , fourYearAnalysisController , futureYearAnalysisController = application_context_builder()
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/iteration1and2", methods=['GET', 'POST'])
@@ -16,6 +16,10 @@ def raw_requests():
 def four_year_analysis():
     return fourYearAnalysisController.dispatch(request)
 
+
+@app.route("/iteration5", methods=['GET', 'POST'])
+def future_year_analysis():
+    return futureYearAnalysisController.dispatch(request)
 
 if __name__ == "__main__":
     app.run(debug=True, port=4999)

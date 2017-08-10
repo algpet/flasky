@@ -31,7 +31,7 @@ class FourYearAnalysisController:
                     bullish_vs_bearish_totals = self.tickerFourYearAnalysisService.analyze_dataframe(ticker_data)
                     slope_and_rsquare_totals = self.linearRegressionSerice.calculate_slope_and_rsquare(ticker_data)
 
-        return render_template('iteration3andProbably4.html', tickers = tickers, from_date=from_date, till_date= till_date,
+        return render_template(self.template, tickers = tickers, from_date=from_date, till_date= till_date,
                                bullish_vs_bearish_totals=bullish_vs_bearish_totals,
                                slope_and_rsquare_totals=slope_and_rsquare_totals,
                                price_changes=price_changes)

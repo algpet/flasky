@@ -9,6 +9,7 @@ from services.price_change_analysis_service import PriceChangeAnalysisService
 
 from controllers.raw_request_controller import RawRequestController
 from controllers.four_year_analysis_controller import  FourYearAnalysisController
+from controllers.future_year_analysis_controller import FutureYearAnalysisController
 
 
 
@@ -27,4 +28,8 @@ def application_context_builder():
     fourYearAnalysisController = FourYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,
                                                             bullishVsBearishAnalysisService, linearRegressionSerice,
                                                             priceChangeAnalysisService, "iteration3andProbably4.html")
-    return rawRequestController , fourYearAnalysisController
+
+    futureYearAnalysisController = FutureYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,priceChangeAnalysisService, "iteration5.html")
+
+
+    return rawRequestController , fourYearAnalysisController , futureYearAnalysisController
