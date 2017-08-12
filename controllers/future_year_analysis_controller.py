@@ -11,7 +11,7 @@ class FutureYearAnalysisController:
 
 
     def dispatch(self, request):
-        tickers, from_date, till_date = self.parameterService.init_params(260)
+        tickers, from_date, till_date = self.parameterService.init_params(365)
         test_img1 = None
         test_img2 = None
         final_prices = []

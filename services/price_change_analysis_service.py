@@ -56,9 +56,10 @@ class PriceChangeAnalysisService:
         year_df = df[0:251]["Close"]
         avg = year_df.mean()
         stdev = year_df.std()
-
-
         price = last_close
+
+
+        #print("avg",avg,"stdev",stdev,"price" ,price)
 
         graph_xlab = [-1.5]
         graph_x = [0]
