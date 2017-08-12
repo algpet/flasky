@@ -14,6 +14,7 @@ class FutureYearAnalysisController:
         tickers, from_date, till_date = self.parameterService.init_params(260)
         test_img1 = None
         test_img2 = None
+        final_prices = []
         if request.method == 'POST':
             tickers, from_date, till_date = self.parameterService.process_params(request)
             tickers = tickers[0]
@@ -21,6 +22,6 @@ class FutureYearAnalysisController:
                 ticker_data = self.tickerRateService.get_rate(tickers, from_date, till_date)
                 if ticker_data is not None:
                     ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
-                    test_img1,test_img2 = self.priceChangeAnalysisService.simmulate_price_change(ticker_data)
+                    test_img1,test_img2,final_prices = self.priceChangeAnalysisService.simmulate_price_change(ticker_data)
 
-        return render_template(self.template, tickers=tickers, from_date=from_date, till_date=till_date,test_img1=test_img1,test_img2=test_img2)
+        return render_template(self.template, tickers=tickers, from_date=from_date, till_date=till_date,test_img1=test_img1,test_img2=test_img2,final_prices=final_prices)

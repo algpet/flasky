@@ -60,29 +60,44 @@ class PriceChangeAnalysisService:
 
         price = last_close
 
+        graph_xlab = [-1.5]
         graph_x = [0]
         graph_y = [price]
         for iter in range(16):
             devi = stdev * price / avg
             price = sct.norm.ppf(random.random(), price, devi)
-            graph_y.append(price)
+            graph_y.append(round(price,2))
             graph_x.append(3 * (iter + 1))
+            graph_xlab.append(3 * (iter + 0.5))
 
         plt.clf()
         plt.plot()
         plt.xlabel('weeks')
         plt.ylabel('price')
         plt.plot(graph_x, graph_y, color="#FF0000",markersize=4,marker="o")
-        plt.savefig(filename1)
 
+        plt.xticks(graph_x)
+
+        font = {'family': 'normal',
+                'size': 7}
+        ylim = plt.ylim()
+        xlim = plt.xlim()
+        axes = plt.gca()
+        axes.set_ylim([ylim[0] - 5, ylim[1] + 5])
+        axes.set_xlim([xlim[0] - 1.5 , xlim[1]])
+        bot = plt.ylim()[0] * 1.02
+
+        colors = ["green","blue"]
+        for i in range(len(graph_x)):
+            plt.text(graph_xlab[i], bot , str(graph_y[i]), fontdict=font , color= colors[i % 2])
+        plt.savefig(filename1)
 
 
         final_prices = []
         devi = stdev * price / avg
-        print("devi" , devi)
         for fp in range(100):
             final_price = sct.norm.ppf(random.random(), price, devi)
-            final_prices.append(final_price)
+            final_prices.append(round(final_price,2))
 
         stdev_archetypes = {-3:0 , -2:0 , -1:0 , 0:0 , 1:0 , 2:0 , 3:0}
         for price in final_prices:
@@ -110,7 +125,7 @@ class PriceChangeAnalysisService:
         plt.savefig(filename2)
 
 
-        return filename1,filename2
+        return filename1,filename2,final_prices
 
 
 

@@ -32,9 +32,16 @@
 
             <div class="panel panel-default">
                 <img src="{{test_img1}}">
+            </div>
+            <div class="panel panel-default">
                 <img src="{{test_img2}}">
             </div>
 
+            <div class="panel panel-default">
+                {% for final_price in final_prices%}
+                    {{final_price | round(1, 'floor')}}
+                {% endfor%}
+            </div>
         {% endif %}
     </div>
 
