@@ -47,12 +47,18 @@ class PriceChangeAnalysisService:
         filename2 = "static/img/graph" + str(random.randint(100000000, 999999999)) + ".png"
 
         last_close = df.iloc[0]['Close']
+        price = last_close
+
         year_df = df[0:251]["Close"]
         stdev = year_df.std()
 
+        print("  last close : " , last_close)
+        print("year's stdev : " , stdev)
 
-        price = last_close
         volatilities = self.volatilityAnalysisService.calculate_volatility(df)
+        print("volatility for year : " , volatilities["year"])
+        print("3 week volatility   : " , volatilities["3week"] , " calculated as  = year_volatility / sqrt(TRADE DAYS INYEAR /(365/21))")
+
         three_week_volatility = volatilities["3week"]
         multi = math.sqrt(math.pi / 2)
 
@@ -61,10 +67,15 @@ class PriceChangeAnalysisService:
         graph_y = [price]
         for iter in range(16):
             expected_3week_shift = price * three_week_volatility / 100
-            print("exp 3w shift" , expected_3week_shift)
+            print("expected 3 week shift for week ", (iter  + 1) * 3 , " is " , expected_3week_shift , " calculated as previous_step_price * three_week_volatility / 100")
+
             devi = expected_3week_shift * multi
 
+            print("shift factor (3rd param) : " , devi , " // expected_3week_shift * sqrt(Pi/2)")
+
             price = sct.norm.ppf(random.random(), price, devi)
+            print("new price : " , price)
+
             graph_y.append(round(price,2))
             graph_x.append(3 * (iter + 1))
             graph_xlab.append(3 * (iter + 0.5))
@@ -96,38 +107,45 @@ class PriceChangeAnalysisService:
         devi = expected_3week_shift * multi
         final_prices = []
 
+        print(" simmulating last step 100 times using price of " , price)
         for fp in range(100):
             final_price = sct.norm.ppf(random.random(), price, devi)
             final_prices.append(round(final_price, 2))
 
-        stdev_archetypes = {-3: 0, -2: 0, -1: 0, 0: 0, 1: 0, 2: 0, 3: 0}
-        for price in final_prices:
-            ac = (price - last_close) / stdev
-            ac = math.trunc(ac)
-            if ac < -4:
-                ac = -4
-            if ac > 3:
-                ac = 3
-            if ac not in stdev_archetypes:
-                stdev_archetypes[ac] = 0
-            stdev_archetypes[ac] += 1
+        price_buckets = []
+        for std in range(-3,4):
+            price_buckets.append(last_close + std * stdev)
+        price_buckets.append(last_close + 6 * stdev)
 
-        keys = stdev_archetypes.keys()
+        stdev_buckets = [0] * len(price_buckets)
+        for price in final_prices:
+            for pos,price_bucket in enumerate(price_buckets):
+                if price < price_bucket:
+                    stdev_buckets[pos] += 1
+                    break
+
         keys2 = []
-        for key in keys:
-            keys2.append(key + 0.25)
+        for key in price_buckets:
+            keys2.append(key - stdev * 0.75)
+
+
+        #print("price buckets" , price_buckets)
+        #print("stdev_buckets" , stdev_buckets)
+        #print("keys2" , keys2)
 
         plt.clf()
         plt.plot()
         plt.xlabel('stdevs away from avg')
-        plt.ylabel('count of simmulations')
-        plt.bar(keys2, stdev_archetypes.values(), 0.5, color='r')
+        plt.ylabel('number of simmulations')
+        plt.xticks(price_buckets)
+        plt.bar(keys2, stdev_buckets, stdev * 0.5, color='r')
+
+        axes = plt.gca()
+        axes.set_xlim([last_close - 4 * stdev, last_close + 4 * stdev])
+
         plt.savefig(filename2)
 
         return filename1, filename2, final_prices
-
-
-
 
 
     #just quick and dirty verion ...
