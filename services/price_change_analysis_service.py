@@ -1,6 +1,7 @@
 import scipy.stats as sct
 import random
 import math
+import pandas as pd
 
 
 from matplotlib import use
@@ -112,40 +113,44 @@ class PriceChangeAnalysisService:
             final_price = sct.norm.ppf(random.random(), price, devi)
             final_prices.append(round(final_price, 2))
 
-        price_buckets = []
-        for std in range(-3,4):
-            price_buckets.append(last_close + std * stdev)
-        price_buckets.append(last_close + 6 * stdev)
 
+        w51_results = pd.DataFrame(data = final_prices,columns=["price"])
+        w51_mean = float(w51_results.mean())
+        w51_stdev = float(w51_results.std())
+
+        self.draw_stdev_plot(final_prices,w51_mean,w51_stdev,filename2)
+
+        return filename1, filename2, final_prices
+
+    def draw_stdev_plot(self,prices,center_at , stdev_step , filename):
+
+        price_buckets = []
+        for std in range(-3, 4):
+            bucket_top = center_at + std * stdev_step
+            price_buckets.append(bucket_top)
+
+        price_buckets.append(center_at + 6 * stdev_step)
         stdev_buckets = [0] * len(price_buckets)
-        for price in final_prices:
-            for pos,price_bucket in enumerate(price_buckets):
+        for price in prices:
+            for pos, price_bucket in enumerate(price_buckets):
                 if price < price_bucket:
                     stdev_buckets[pos] += 1
                     break
 
         keys2 = []
         for key in price_buckets:
-            keys2.append(key - stdev * 0.75)
-
-
-        #print("price buckets" , price_buckets)
-        #print("stdev_buckets" , stdev_buckets)
-        #print("keys2" , keys2)
+            keys2.append(key - stdev_step * 0.75)
 
         plt.clf()
         plt.plot()
         plt.xlabel('stdevs away from avg')
         plt.ylabel('number of simmulations')
         plt.xticks(price_buckets)
-        plt.bar(keys2, stdev_buckets, stdev * 0.5, color='r')
-
+        plt.bar(keys2, stdev_buckets, stdev_step * 0.5, color='r')
         axes = plt.gca()
-        axes.set_xlim([last_close - 4 * stdev, last_close + 4 * stdev])
+        axes.set_xlim([center_at - 4 * stdev_step, center_at + 4 * stdev_step])
+        plt.savefig(filename)
 
-        plt.savefig(filename2)
-
-        return filename1, filename2, final_prices
 
 
     #just quick and dirty verion ...
