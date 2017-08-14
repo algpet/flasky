@@ -9,6 +9,8 @@ from services.bullish_vs_bearish_analysis_service import BullishVsBearishAnalysi
 from services.linear_regression_service import LinearRegressionSerice
 from services.volatility_analysis_service import VolatilityAnalysisService
 from services.price_change_analysis_service import PriceChangeAnalysisService
+from services.plotting_util_service import PlottingUtilServce
+from services.price_change_simulation_service import PriceChangeSimulationService
 
 from controllers.raw_request_controller import RawRequestController
 from controllers.four_year_analysis_controller import  FourYearAnalysisController
@@ -24,15 +26,17 @@ def application_context_builder():
     bullishVsBearishAnalysisService = BullishVsBearishAnalysisService()
     linearRegressionSerice = LinearRegressionSerice()
     volatilityAnalysisService = VolatilityAnalysisService()
+    plottingUtilService = PlottingUtilServce()
 
     priceChangeAnalysisService = PriceChangeAnalysisService(volatilityAnalysisService)
+    priceChangeSimulationService = PriceChangeSimulationService(volatilityAnalysisService,plottingUtilService)
 
     rawRequestController = RawRequestController(parameterService,tickerRateService,tickerAnalysisService, tickerNameService, "iteration1and2.html")
     fourYearAnalysisController = FourYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,
                                                             bullishVsBearishAnalysisService, linearRegressionSerice,
                                                             priceChangeAnalysisService, "iteration3andProbably4.html")
 
-    futureYearAnalysisController = FutureYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,priceChangeAnalysisService, "iteration5.html")
+    futureYearAnalysisController = FutureYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "iteration5.html")
 
 
     return rawRequestController , fourYearAnalysisController , futureYearAnalysisController

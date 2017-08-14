@@ -25,16 +25,19 @@ class LinearRegressionSerice:
         return df
 
 
-    def calculate_slope_and_rsquare_for_period(self,df,period):
-        df = df[period[0]:period[1]]
+    def calculate_slope_and_rsquare_for_period(self,df,period=None):
+
+        if period is not None:
+            df = df[period[0]:period[1]]
         df = df.reindex(index=df.index[::-1])
         df['Days'] = (df.index - df.index[0]).days
-        df = df[['Days','Close']]
+        return self.calculate_slope_and_rsquare_kernel(df,"Days","CLose")
 
-        #print(period)
-        #print(df)
-        slope, intercept, r_value, p_value, std_err = stats.linregress(df['Days'], df['Close'])
+
+    def calculate_slope_and_rsquare_kernel(self,df,x,y):
+        slope, intercept, r_value, p_value, std_err = stats.linregress(df[x], df[y])
         return {"slope":slope , "r_squared":r_value ** 2}
+
 
     def pack_to_dataframe(self,period_data):
         df_9month = pd.DataFrame({'slope': period_data['recent9month']['slope'],
