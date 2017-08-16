@@ -31,7 +31,7 @@ class LinearRegressionSerice:
             df = df[period[0]:period[1]]
         df = df.reindex(index=df.index[::-1])
         df['Days'] = (df.index - df.index[0]).days
-        return self.calculate_slope_and_rsquare_kernel(df,"Days","CLose")
+        return self.calculate_slope_and_rsquare_kernel(df,"Days","Close")
 
 
     def calculate_slope_and_rsquare_kernel(self,df,x,y):
