@@ -11,14 +11,14 @@
         <div class="panel-body">
             <form method="post">
                 <div class="panel">
-                    <label for="tickers">Stocks:</label>
+                    <label for="tickers">Stock:</label>
                     <input name="tickers" id="tickers" value="{{tickers or ''}}">
 
-                    <label for="from_date" >From:</label>
-                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" >
+                    <!--<label for="from_date" >From:</label>-->
+                    <input name="from_date" id="from_date"  type="date" value="{{from_date}}" hidden>
 
-                    <label for="till_date">Till:</label>
-                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" >
+                    <!--<label for="till_date">Till:</label>-->
+                    <input name="till_date" id="till_date"  type="date" value="{{till_date}}" hidden>
 
                     <button name="submit" >Fetch!</button>
                 </div>
