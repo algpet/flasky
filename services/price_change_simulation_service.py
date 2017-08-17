@@ -25,7 +25,7 @@ class PriceChangeSimulationService:
 
 
     # v2
-    def simmulate_price_change(self, df):
+    def simmulate_price_change(self, df, weeks=60):
 
         self.plottingUtilService.clean_files("static/img/*.png")
         plot1_filename = self.plottingUtilService.generate_filename("static/img/graph",".png")
@@ -35,18 +35,18 @@ class PriceChangeSimulationService:
         three_week_volatility = self.volatilityAnalysisService.calculate_volatility(df)["3week"]
 
 
-        weeks = [0]
+        weeks_list = [0]
         prices = [last_close]
-        for period in range(self.periods1):
+        for period in range(int(weeks / self.weeks_per_period) - 1):
             expected_3week_shift = prices[-1] * three_week_volatility / 100
             shift = expected_3week_shift * self.volatility_multiplier
             new_price = sct.norm.ppf(random.random(), prices[-1], shift)
             prices.append(round(new_price, 2))
-            weeks.append(self.weeks_per_period * (period + 1))
+            weeks_list.append(self.weeks_per_period * (period + 1))
 
-        df = pd.DataFrame({"week": weeks , "prices":prices})
+        df = pd.DataFrame({"week": weeks_list , "prices":prices})
 
-        self.draw_simul_plot(weeks , prices , plot1_filename)
+        self.draw_simul_plot(weeks_list, prices, plot1_filename)
 
         ####################################################################################
 
@@ -66,6 +66,7 @@ class PriceChangeSimulationService:
 
 
     def draw_simul_plot(self,x , y , filename):
+        plt.rcParams["figure.figsize"] = (16, 6)
         plt.clf()
         plt.plot()
         plt.xlabel('weeks')
@@ -76,9 +77,6 @@ class PriceChangeSimulationService:
         polyfit = numpy.polyfit(x, y, 1)
         fx = numpy.poly1d(polyfit)
         plt.plot(x, fx(x), "b--")
-        # the line equation:
-        #print "y=%.6fx+(%.6f)" % (z[0], z[1])
-
 
         plt.xticks(x)
 
@@ -86,15 +84,15 @@ class PriceChangeSimulationService:
         xlim = plt.xlim()
         axes = plt.gca()
         axes.set_ylim([ylim[0] - 5, ylim[1] + 5])
-        axes.set_xlim([xlim[0] - self.weeks_per_period / 2, xlim[1]])
-        label_x = plt.ylim()[0] * 1.02
+        axes.set_xlim([-2, xlim[1] + 1.5])
+        label_x = plt.ylim()[0] + (plt.ylim()[1] - plt.ylim()[0]) * 0.02
 
-        xlab = [-1 * self.weeks_per_period / 2]
+        xlab = [0]
         for pos in x:
-            xlab.append(pos + self.weeks_per_period / 2)
+            xlab.append(pos + self.weeks_per_period)
 
         for i in range(len(x)):
-            plt.text(xlab[i], label_x, str(y[i]), fontdict=self.font, color=self.alternate_colors[i % 2])
+            plt.text(xlab[i], label_x, str(y[i]), fontdict=self.font, color=self.alternate_colors[i % 2], horizontalalignment='center')
         plt.savefig(filename)
 
 

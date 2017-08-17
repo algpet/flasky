@@ -4,22 +4,23 @@ from flask import request
 from context_builder import application_context_builder
 
 app = Flask(__name__)
-rawRequestController , fourYearAnalysisController , futureYearAnalysisController = application_context_builder()
+
+rawDataController , summaryAnalysisController , predictionController = application_context_builder()
 
 @app.route("/", methods=['GET', 'POST'])
-@app.route("/iteration1and2", methods=['GET', 'POST'])
+@app.route("/raw_data", methods=['GET', 'POST'])
 def raw_requests():
-    return rawRequestController.dispatch(request)
+    return rawDataController.dispatch(request)
 
 
-@app.route("/iteration3andProbably4", methods=['GET', 'POST'])
+@app.route("/summary_analysis", methods=['GET', 'POST'])
 def four_year_analysis():
-    return fourYearAnalysisController.dispatch(request)
+    return summaryAnalysisController.dispatch(request)
 
 
-@app.route("/iteration5", methods=['GET', 'POST'])
+@app.route("/prediction", methods=['GET', 'POST'])
 def future_year_analysis():
-    return futureYearAnalysisController.dispatch(request)
+    return predictionController.dispatch(request)
 
 if __name__ == "__main__":
     app.run(debug=True, port=4999)

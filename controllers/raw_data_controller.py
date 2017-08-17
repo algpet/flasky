@@ -1,7 +1,7 @@
 from flask import render_template
 
 
-class RawRequestController:
+class RawDataController:
 
     def __init__(self, parameterService, tickerRateService, ticketAnalysisService, tickerNameService, template):
         self.parameterService = parameterService
@@ -19,7 +19,7 @@ class RawRequestController:
             tickers, from_date, till_date = self.parameterService.process_params(request)
             if not ( tickers is None or from_date is None or till_date is None):
                 ticker_data = self.tickerRateService.get_rates(tickers, from_date, till_date)
-                ticker_data = self.ticketAnalysisService.analyze_dataframes(ticker_data)
+                #ticker_data = self.ticketAnalysisService.analyze_dataframes(ticker_data)
                 ticker_headers = self.tickerNameService.get_tickers_data(tickers)
                 tickers = ",".join(tickers)
 

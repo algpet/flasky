@@ -12,7 +12,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 
-        <title>{% block title %}{% endblock %} - My Webpage</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+
+        <title>{% block title %}{% endblock %}</title>
         {% endblock %}
     </head>
     <body background="https://ak5.picdn.net/shutterstock/videos/1658731/thumb/1.jpg">
@@ -22,18 +24,18 @@
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
                         <li {% block active1 %}{% endblock %}>
-                            <a href="/iteration1and2" role="button">
-                                Iteration 1,2
+                            <a href="/raw_data" role="button">
+                                Raw Data
                             </a>
                         </li>
                         <li {% block active2 %}{% endblock %}>
-                            <a href="/iteration3andProbably4" role="button">
-                                Iteration 3,4
+                            <a href="/summary_analysis" role="button">
+                                Summary Analysis
                             </a>
                         </li>
                         <li {% block active5 %}{% endblock %}>
-                            <a href="/iteration5" role="button">
-                                Iteration 5 ..
+                            <a href="/prediction" role="button">
+                                Prediction
                             </a>
                         </li>
                     </ul>

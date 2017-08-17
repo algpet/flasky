@@ -12,10 +12,9 @@ from services.price_change_analysis_service import PriceChangeAnalysisService
 from services.plotting_util_service import PlottingUtilServce
 from services.price_change_simulation_service import PriceChangeSimulationService
 
-from controllers.raw_request_controller import RawRequestController
-from controllers.four_year_analysis_controller import  FourYearAnalysisController
-from controllers.future_year_analysis_controller import FutureYearAnalysisController
-
+from controllers.raw_data_controller import RawDataController
+from controllers.summary_analysis_controller import  SummaryAnalysisController
+from controllers.prediction_controller import PredictionController
 
 
 def application_context_builder():
@@ -31,12 +30,11 @@ def application_context_builder():
     priceChangeAnalysisService = PriceChangeAnalysisService(volatilityAnalysisService)
     priceChangeSimulationService = PriceChangeSimulationService(volatilityAnalysisService,plottingUtilService)
 
-    rawRequestController = RawRequestController(parameterService,tickerRateService,tickerAnalysisService, tickerNameService, "iteration1and2.html")
-    fourYearAnalysisController = FourYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,
+    rawDataController = RawDataController(parameterService,tickerRateService,tickerAnalysisService, tickerNameService, "raw_data.html")
+    summaryAnalysisController = SummaryAnalysisController(parameterService,tickerRateService,tickerAnalysisService,
                                                             bullishVsBearishAnalysisService, linearRegressionSerice,
-                                                            priceChangeAnalysisService, "iteration3andProbably4.html")
+                                                            priceChangeAnalysisService, "summary_analysis.html")
 
-    futureYearAnalysisController = FutureYearAnalysisController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "iteration5.html")
+    predictionController = PredictionController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "prediction.html")
 
-
-    return rawRequestController , fourYearAnalysisController , futureYearAnalysisController
+    return rawDataController , summaryAnalysisController , predictionController

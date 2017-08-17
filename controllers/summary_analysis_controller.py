@@ -1,7 +1,7 @@
 from flask import render_template
 
 
-class FourYearAnalysisController:
+class SummaryAnalysisController:
 
     def __init__(self, parameterService, tickerRateService, ticketAnalysisService , tickerFourYearAnalysisService ,linearRegressionSerice, priceChangeAnalysisService, template):
         self.time_frame = 1500

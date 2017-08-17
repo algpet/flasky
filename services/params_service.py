@@ -24,3 +24,6 @@ class ParameterService:
                 tickers = [tickers]
 
         return tickers, from_date, till_date
+
+    def get_param(self,request,param):
+        return request.form.get(param)
