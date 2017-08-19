@@ -23,11 +23,6 @@
             <div class="col-lg-10 col-lg-offset-1">
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li {% block active1 %}{% endblock %}>
-                            <a href="/raw_data" role="button">
-                                Raw Data
-                            </a>
-                        </li>
                         <li {% block active2 %}{% endblock %}>
                             <a href="/summary_analysis" role="button">
                                 Summary Analysis
@@ -36,6 +31,17 @@
                         <li {% block active5 %}{% endblock %}>
                             <a href="/prediction" role="button">
                                 Prediction
+                            </a>
+                        </li>
+                        <li {% block active1 %}{% endblock %}>
+                            <a href="/raw_data" role="button">
+                                Raw Data
+                            </a>
+                        </li>
+
+                        <li {% block active4 %}{% endblock %}>
+                            <a href="/download" role="button">
+                                Downloadable
                             </a>
                         </li>
                     </ul>

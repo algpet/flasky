@@ -15,6 +15,7 @@ from services.price_change_simulation_service import PriceChangeSimulationServic
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
 from controllers.prediction_controller import PredictionController
+from controllers.download_controller import DownloadController
 
 
 def application_context_builder():
@@ -36,5 +37,6 @@ def application_context_builder():
                                                             priceChangeAnalysisService, "summary_analysis.html")
 
     predictionController = PredictionController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "prediction.html")
+    downloadController = DownloadController(parameterService,tickerRateService)
 
-    return rawDataController , summaryAnalysisController , predictionController
+    return rawDataController , summaryAnalysisController , predictionController , downloadController
