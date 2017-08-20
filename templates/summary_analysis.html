@@ -131,9 +131,6 @@
     </div>
 
 
-
-
-
     <script>
         $( document ).ready(function() {
             $('table').addClass('table')
@@ -146,16 +143,6 @@
 
             let recommendation = "-";
 
-
-/*
-=IF(AND(AZ6="Up - Regression is great",     BH6="Up - Bullish"),"Call Option Try OTM"," ")
-=IF(AND(AZ6="Up - Regression is ok",        BH6="Up - Bullish"),"Call Option ITM"," ")
-=IF(AND(AZ6="Up - Regression is low",       BH6="Up - Bullish"),"Call Option ITM"," ")
-
-=IF(AND(AZ6="Down - Regression is great",   BH6="Up - Bullish"),"Call Option ITM close to ATM"," ")
-=IF(AND(AZ6="Down - Regression is ok",      BH6="Up - Bullish"),"Call Option ITM"," ")
-=IF(AND(AZ6="Down - Regression is low",     BH6="Up - Bullish"),"Call Option"," ")
-*/
 
             if(up_down == "Up - Bullish"){
                 if(regression == "Up - Regression is great"){
@@ -180,15 +167,6 @@
             }
 
 
-/*
-=IF(AND(AZ6="Up - Regression is great",     BH6="Neutral"),"Call Option ITM close to ATM"," ")
-=IF(AND(AZ6="Up - Regression is ok",        BH6="Neutral"),"Call Option ITM"," ")
-=IF(AND(AZ6="Up - Regression is low",       BH6="Neutral"),"Call Option ITM close to ATM"," ")
-
-=IF(AND(AZ6="Down - Regression is great",   BH6="Neutral"),"Put Option ITM close to ATM"," ")
-=IF(AND(AZ6="Down - Regression is ok",      BH6="Neutral"),"Put Option ITM"," ")
-=IF(AND(AZ6="Down - Regression is low",     BH6="Neutral"),"Put Option ITM close to ATM"," ")
-*/
             if(up_down == "Neutral"){
                 if(regression == "Up - Regression is great"){
                     recommendation = "Call Option ITM close to ATM";
@@ -211,15 +189,6 @@
                 }
             }
 
-/*
-=IF(AND(AZ6="Up - Regression is great",     BH6="Down - Bearish"),"Put Option ITM close to ATM"," ")
-=IF(AND(AZ6="Up - Regression is ok",        BH6="Down - Bearish"),"Put Option ITM"," ")
-=IF(AND(AZ6="Up - Regression is low",       BH6="Down - Bearish"),"Put Option"," ")
-
-=IF(AND(AZ6="Down - Regression is great",   BH6="Down - Bearish"),"Put Option try OTM"," ")
-=IF(AND(AZ6="Down - Regression is ok",      BH6="Down - Bearish"),"Put Option ITM"," ")
-=IF(AND(AZ6="Down - Regression is low",     BH6="Down - Bearish"),"Put Option ITM close to ATM"," ")
-*/
             if(up_down == "Down - Bearish"){
 
                 if(regression == "Up - Regression is great"){
@@ -232,9 +201,8 @@
                     recommendation = "Put Option";
                 }
 
-
                 if(regression == "Down - Regression is great"){
-                    recommendation = "Put Option try OTM"";
+                    recommendation = "Put Option try OTM";
                 }
                 if(regression == "Down - Regression is ok"){
                     recommendation = "Put Option ITM";
@@ -244,7 +212,9 @@
                 }
             }
 
+
             $("#call_option_recommendation_text").val(recommendation);
+
 
         });
 
