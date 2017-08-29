@@ -27,3 +27,21 @@ class ParameterService:
 
     def get_param(self,request,param):
         return request.form.get(param)
+
+    def init_option_controller_params(self):
+        underlyingPrice = 14.00
+        marketPrice = 2.2
+        days = 21
+        volatility = 76.5
+        interest = 1.5
+        dividend = 0.0
+        return underlyingPrice,marketPrice,days,volatility,interest,dividend
+
+    def process_options_params(self,request):
+        underlyingPrice = float(request.form.get('underlyingPrice'))
+        marketPrice = float(request.form.get('marketPrice'))
+        days = int(request.form.get('days'))
+        volatility = float(request.form.get('volatility'))
+        interest = float(request.form.get('interest'))
+        dividend = float(request.form.get('dividend'))
+        return underlyingPrice, marketPrice , days, volatility, interest, dividend

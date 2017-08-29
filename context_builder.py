@@ -11,11 +11,14 @@ from services.volatility_analysis_service import VolatilityAnalysisService
 from services.price_change_analysis_service import PriceChangeAnalysisService
 from services.plotting_util_service import PlottingUtilServce
 from services.price_change_simulation_service import PriceChangeSimulationService
+from services.option_suggestion_service import OptionSuggestionService
 
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
 from controllers.prediction_controller import PredictionController
 from controllers.download_controller import DownloadController
+from controllers.options_controller import OptionsController
+
 
 
 def application_context_builder():
@@ -27,6 +30,7 @@ def application_context_builder():
     linearRegressionSerice = LinearRegressionSerice()
     volatilityAnalysisService = VolatilityAnalysisService()
     plottingUtilService = PlottingUtilServce()
+    optionSuggestionService = OptionSuggestionService()
 
     priceChangeAnalysisService = PriceChangeAnalysisService(volatilityAnalysisService)
     priceChangeSimulationService = PriceChangeSimulationService(volatilityAnalysisService,plottingUtilService)
@@ -38,5 +42,6 @@ def application_context_builder():
 
     predictionController = PredictionController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "prediction.html")
     downloadController = DownloadController(parameterService,tickerRateService)
+    optionsController = OptionsController(parameterService,optionSuggestionService,"options.html")
 
-    return rawDataController , summaryAnalysisController , predictionController , downloadController
+    return rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController

@@ -5,7 +5,7 @@ from context_builder import application_context_builder
 
 app = Flask(__name__)
 
-rawDataController , summaryAnalysisController , predictionController , downloadController = application_context_builder()
+rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController = application_context_builder()
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/raw_data", methods=['GET', 'POST'])
@@ -22,9 +22,15 @@ def four_year_analysis():
 def future_year_analysis():
     return predictionController.dispatch(request)
 
+
 @app.route("/download", methods=['GET', 'POST'])
 def download_excel():
     return downloadController.dispatch(request)
+
+
+@app.route("/options", methods=['GET', 'POST'])
+def options_summary():
+    return optionsController.dispatch(request)
 
 if __name__ == "__main__":
     app.run(debug=True, port=4999)
