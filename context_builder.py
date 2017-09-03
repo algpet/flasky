@@ -1,6 +1,9 @@
 import matplotlib
 matplotlib.use('Agg')
 
+import pandas as pd
+pd.set_option('display.max_colwidth', -1)
+
 from services.ticker_analysis_service import TickerAnalysisService
 from services.params_service import ParameterService
 from services.ticker_info_service import TickerInfoService
@@ -12,6 +15,8 @@ from services.price_change_analysis_service import PriceChangeAnalysisService
 from services.plotting_util_service import PlottingUtilServce
 from services.price_change_simulation_service import PriceChangeSimulationService
 from services.option_suggestion_service import OptionSuggestionService
+from services.dataframe_column_inserter_service import DataftrameColumnInserterService
+from services.option_implied_volatility_service import OptionImpliedVolatilityService
 
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
@@ -31,6 +36,9 @@ def application_context_builder():
     volatilityAnalysisService = VolatilityAnalysisService()
     plottingUtilService = PlottingUtilServce()
     optionSuggestionService = OptionSuggestionService()
+    dataftameColumnInserterService = DataftrameColumnInserterService()
+
+    optionImpliedVolatilityService = OptionImpliedVolatilityService(optionSuggestionService,dataftameColumnInserterService)
 
     priceChangeAnalysisService = PriceChangeAnalysisService(volatilityAnalysisService)
     priceChangeSimulationService = PriceChangeSimulationService(volatilityAnalysisService,plottingUtilService)
@@ -42,6 +50,6 @@ def application_context_builder():
 
     predictionController = PredictionController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "prediction.html")
     downloadController = DownloadController(parameterService,tickerRateService)
-    optionsController = OptionsController(parameterService,optionSuggestionService,"options.html")
+    optionsController = OptionsController(parameterService,optionSuggestionService,optionImpliedVolatilityService,"options.html")
 
     return rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController

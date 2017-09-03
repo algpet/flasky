@@ -1,20 +1,36 @@
 from flask import render_template
+from flask import jsonify
+
 class OptionsController:
-    def __init__(self,parameterService,option_suggestion_service,template):
+    def __init__(self,parameterService,optionSuggestionService,optionImpliedVolatilityService,template):
         self.parameterService = parameterService
-        self.option_suggestion_service = option_suggestion_service
+        self.optionSuggestionService = optionSuggestionService
+        self.optionImpliedVolatilityService = optionImpliedVolatilityService
         self.template = template
 
     def dispatch(self, request):
         df_call = None
         df_put = None
-        underlyingPrice, marketPrice , days, volatility,interest, dividend = self.parameterService.init_option_controller_params()
+        underlyingPrice, days, volatility,interest, dividend = self.parameterService.init_option_controller_params()
 
         if request.method == 'POST':
-            underlyingPrice, marketPrice , days, volatility,interest, dividend = self.parameterService.process_options_params(request)
-            df_call , df_put = self.option_suggestion_service.calculate_options(underlyingPrice,days,volatility,interest,dividend,marketPrice)
+            underlyingPrice, days, volatility,interest, dividend = self.parameterService.process_options_params(request)
+            df_call, df_put = self.optionSuggestionService.calculate_options(underlyingPrice,days,volatility,interest,dividend)
+            df_call, df_put = self.optionImpliedVolatilityService.appendMarketPriceColumns(df_call,df_put)
 
-        return render_template(self.template,underlyingPrice=underlyingPrice,marketPrice=marketPrice,
+        return render_template(self.template,underlyingPrice=underlyingPrice,
                                days=days,volatility=volatility,interest=interest,dividend=dividend,
                                df_call=df_call,df_put=df_put)
+
+
+    def serveImpliedVolatility(self,request):
+        print("meow")
+        optionSide , underlyingPrice, exercisePrice, days, targetPrice, interest, dividend = self.parameterService.process_options_params_ajax(request)
+
+        if optionSide == "call":
+            result = self.optionImpliedVolatilityService.impliedCallVolatility(underlyingPrice, exercisePrice, days , targetPrice, interest, dividend)
+        else:
+            result = self.optionImpliedVolatilityService.impliedPutVolatility(underlyingPrice, exercisePrice, days,targetPrice, interest, dividend)
+
+        return jsonify(result=result)
 

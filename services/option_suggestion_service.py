@@ -8,7 +8,7 @@ class OptionSuggestionService:
     def __init__(self):
         pass
 
-    def calculate_options(self,underlyingPrice,days,volatility,interest,dividend,marketPrice):
+    def calculate_options(self,underlyingPrice,days,volatility,interest,dividend):
 
         volatility /= 100
         interest /= 100
@@ -48,14 +48,15 @@ class OptionSuggestionService:
         df.loc[df['exercisePrice'] < underlyingPrice, 'putXTM'] = 'OTM'
         df.loc[df['exercisePrice'] > underlyingPrice, 'putXTM'] = 'ITM'
 
-        df = df.assign(impliedCallVolatility=df.apply(
-            lambda row: self.impliedCallVolatility(underlyingPrice, row["exercisePrice"], days / 365,  marketPrice,interest,dividend), axis=1))
+        """
+        df = df.assign(impliedCallVolatilityX=df.apply(
+            lambda row: self.impliedCallVolatility(underlyingPrice, row["exercisePrice"], days / 365,  2.2 ,interest,dividend), axis=1))
         df = df.assign(impliedPutVolatility=df.apply(
-            lambda row: self.impliedPutVolatility(underlyingPrice, row["exercisePrice"], days / 365, marketPrice ,interest,dividend), axis=1))
+            lambda row: self.impliedPutVolatility(underlyingPrice, row["exercisePrice"], days / 365, 2.2 ,interest,dividend), axis=1))
+        """
 
-
-        df_call = df[["exercisePrice","callXTM","callOption","impliedCallVolatility","callDelta","gamma","vega","callTheta","callRho"]]
-        df_put = df[["exercisePrice","putXTM","putOption","impliedPutVolatility","putDelta", "gamma", "vega", "putTheta", "putRho"]]
+        df_call = df[["exercisePrice","callXTM","callOption","callDelta","gamma","vega","callTheta","callRho"]]
+        df_put = df[["exercisePrice","putXTM","putOption","putDelta", "gamma", "vega", "putTheta", "putRho"]]
 
         return df_call , df_put
 
@@ -128,11 +129,11 @@ class OptionSuggestionService:
         dTwo = self.dTwo(underlyingPrice, exercisePrice, time, volatility, interest, dividend)
         return - 0.01 * exercisePrice * time * math.exp(-interest * time) * (1 - norm.cdf(dTwo))
 
-
-
     def impliedCallVolatility(self, underlyingPrice, exercisePrice, time, targetPrice, interest, dividend):
         high = 5
         low = 0
+
+        print(underlyingPrice, exercisePrice, time, targetPrice, interest, dividend)
 
         while (high - low) > 0.0001:
             if self.callOption(underlyingPrice, exercisePrice, time, (high + low) / 2, interest,dividend) > targetPrice:
@@ -150,6 +151,5 @@ class OptionSuggestionService:
                 high = (high + low) / 2
             else:
                 low = (high + low) / 2
-
         return (high + low) / 2
 
