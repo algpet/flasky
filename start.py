@@ -20,12 +20,11 @@ def add_header(r):
 """
 
 
-@app.route("/", methods=['GET', 'POST'])
 @app.route("/raw_data", methods=['GET', 'POST'])
 def raw_requests():
     return rawDataController.dispatch(request)
 
-
+@app.route("/", methods=['GET', 'POST'])
 @app.route("/summary_analysis", methods=['GET', 'POST'])
 def four_year_analysis():
     return summaryAnalysisController.dispatch(request)
