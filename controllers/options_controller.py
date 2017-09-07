@@ -2,10 +2,11 @@ from flask import render_template
 from flask import jsonify
 
 class OptionsController:
-    def __init__(self,parameterService,optionSuggestionService,optionImpliedVolatilityService,template):
+    def __init__(self,parameterService, optionSuggestionService, optionImpliedVolatilityService, optionSuggestionColumnLabelingService, template):
         self.parameterService = parameterService
         self.optionSuggestionService = optionSuggestionService
         self.optionImpliedVolatilityService = optionImpliedVolatilityService
+        self.optionSuggestionColumnLabelingService = optionSuggestionColumnLabelingService
         self.template = template
 
     def dispatch(self, request):
@@ -15,8 +16,11 @@ class OptionsController:
 
         if request.method == 'POST':
             underlyingPrice, days, volatility,interest, dividend = self.parameterService.process_options_params(request)
-            df_call, df_put = self.optionSuggestionService.calculate_options(underlyingPrice,days,volatility,interest,dividend)
+            df_call, df_put = self.optionSuggestionService.calculate_options(underlyingPrice,days,volatility,interest, dividend)
             df_call, df_put = self.optionImpliedVolatilityService.appendMarketPriceColumns(df_call,df_put)
+
+            self.optionSuggestionColumnLabelingService.rename_call(df_call)
+            self.optionSuggestionColumnLabelingService.rename_put(df_put)
 
         return render_template(self.template,underlyingPrice=underlyingPrice,
                                days=days,volatility=volatility,interest=interest,dividend=dividend,

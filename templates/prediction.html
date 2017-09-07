@@ -49,7 +49,7 @@
             </div>
 
             <div class="panel panel-default">
-                <h2>Do you need this data displayed ?</h2>
+                <h2>Week {{selected_week}} Values</h2>
                 {% for final_price in final_prices%}
                     {{final_price | round(1, 'floor')}}
                 {% endfor%}

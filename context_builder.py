@@ -17,6 +17,7 @@ from services.price_change_simulation_service import PriceChangeSimulationServic
 from services.option_suggestion_service import OptionSuggestionService
 from services.dataframe_column_inserter_service import DataftrameColumnInserterService
 from services.option_implied_volatility_service import OptionImpliedVolatilityService
+from services.option_suggestion_column_labeling_service import OptionSuggestionColumnLabelingService
 
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
@@ -36,9 +37,10 @@ def application_context_builder():
     volatilityAnalysisService = VolatilityAnalysisService()
     plottingUtilService = PlottingUtilServce()
     optionSuggestionService = OptionSuggestionService()
-    dataftameColumnInserterService = DataftrameColumnInserterService()
 
+    dataftameColumnInserterService = DataftrameColumnInserterService()
     optionImpliedVolatilityService = OptionImpliedVolatilityService(optionSuggestionService,dataftameColumnInserterService)
+    optionSuggestionColumnLabelingService = OptionSuggestionColumnLabelingService()
 
     priceChangeAnalysisService = PriceChangeAnalysisService(volatilityAnalysisService)
     priceChangeSimulationService = PriceChangeSimulationService(volatilityAnalysisService,plottingUtilService)
@@ -50,6 +52,7 @@ def application_context_builder():
 
     predictionController = PredictionController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "prediction.html")
     downloadController = DownloadController(parameterService,tickerRateService)
-    optionsController = OptionsController(parameterService,optionSuggestionService,optionImpliedVolatilityService,"options.html")
+    optionsController = OptionsController(parameterService,optionSuggestionService,optionImpliedVolatilityService,
+                                          optionSuggestionColumnLabelingService,"options.html")
 
     return rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController
