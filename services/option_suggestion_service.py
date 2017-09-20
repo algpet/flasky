@@ -13,32 +13,33 @@ class OptionSuggestionService:
         volatility /= 100
         interest /= 100
         dividend /= 100
+        optime = days / (365 * 1.0)
 
         exercisePrices = []
         for dif in range(-5,6):
             exercisePrices.append(underlyingPrice + 0.5 * dif)
 
         df = pd.DataFrame({"exercisePrice":exercisePrices})
-        df = df.assign(putDelta=df.exercisePrice.apply(lambda e_price: self.putDelta(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+        df = df.assign(putDelta=df.exercisePrice.apply(lambda e_price: self.putDelta(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(callDelta=df.exercisePrice.apply(
-            lambda e_price: self.callDelta(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.callDelta(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(putTheta=df.exercisePrice.apply(
-            lambda e_price: self.putTheta(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.putTheta(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(callTheta=df.exercisePrice.apply(
-            lambda e_price: self.callTheta(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.callTheta(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(putRho=df.exercisePrice.apply(
-            lambda e_price: self.putRho(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.putRho(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(callRho=df.exercisePrice.apply(
-            lambda e_price: self.callRho(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.callRho(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(gamma=df.exercisePrice.apply(
-            lambda e_price: self.gamma(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.gamma(underlyingPrice, e_price, optime, volatility, interest, dividend)))
         df = df.assign(vega=df.exercisePrice.apply(
-            lambda e_price: self.vega(underlyingPrice, e_price, days / 365, volatility, interest, dividend)))
+            lambda e_price: self.vega(underlyingPrice, e_price, optime, volatility, interest, dividend)))
 
         df = df.assign(callOption=df.apply(
-            lambda row: self.callOption(underlyingPrice, row["exercisePrice"], days / 365, volatility, interest, dividend),axis=1))
+            lambda row: self.callOption(underlyingPrice, row["exercisePrice"], optime, volatility, interest, dividend),axis=1))
         df = df.assign(putOption=df.apply(
-            lambda row: self.putOption(underlyingPrice, row["exercisePrice"], days / 365, volatility, interest, dividend),axis=1))
+            lambda row: self.putOption(underlyingPrice, row["exercisePrice"], optime, volatility, interest, dividend),axis=1))
 
         df['callXTM'] = "ATM"
         df.loc[df['exercisePrice'] < underlyingPrice , 'callXTM'] = 'ITM'
@@ -61,9 +62,10 @@ class OptionSuggestionService:
         return df_call , df_put
 
 
-
     def volatility_factor(self,volatility,time):
+        print("vola")
         return volatility * math.sqrt(time)
+
 
     def dOne(self,underlyingPrice, exercisePrice, time, volatility, interest, dividend):
 

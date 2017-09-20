@@ -1,4 +1,6 @@
 import pandas as pd
+
+
 class BullishVsBearishAnalysisService:
 
     def __init__(self):
@@ -14,9 +16,12 @@ class BullishVsBearishAnalysisService:
 
 
     def analyze_dataframe(self, df):
+        print(df.shape)
         bb_counts = {}
         for label , period in self.periods.items():
+
             bb_counts[label] = self.count_markers(df,period)
+            print(label, bb_counts[label], period)
 
         df = self.pack_to_dataframe(bb_counts)
         return df
@@ -29,6 +34,8 @@ class BullishVsBearishAnalysisService:
         return {'bearish':bearish,'bullish':bullish}
 
     def pack_to_dataframe(self,bb_counts):
+
+        print(bb_counts)
 
         df_3month =  pd.DataFrame({'recent_bullish': bb_counts['recent3month']['bullish'],
                                    'recent_bearish': bb_counts['recent3month']['bearish'],

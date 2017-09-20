@@ -28,7 +28,8 @@ from controllers.options_controller import OptionsController
 
 
 def application_context_builder():
-    tickerRateService = TickerRateService('google')
+    #tickerRateService = TickerRateService('google')
+    tickerRateService = TickerRateService('yahoo')
     tickerNameService = TickerInfoService('resources/secwiki_tickers.csv')
     parameterService = ParameterService(10)
     tickerAnalysisService = TickerAnalysisService()

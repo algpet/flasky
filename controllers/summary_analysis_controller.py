@@ -3,12 +3,12 @@ from flask import render_template
 
 class SummaryAnalysisController:
 
-    def __init__(self, parameterService, tickerRateService, ticketAnalysisService , tickerFourYearAnalysisService ,linearRegressionSerice, priceChangeAnalysisService, template):
+    def __init__(self, parameterService, tickerRateService, ticketAnalysisService , bullishVsBearishAnalysisService ,linearRegressionSerice, priceChangeAnalysisService, template):
         self.time_frame = 1500
         self.parameterService = parameterService
         self.tickerRateService = tickerRateService
         self.ticketAnalysisService = ticketAnalysisService
-        self.tickerFourYearAnalysisService = tickerFourYearAnalysisService
+        self.bullishVsBearishAnalysisService = bullishVsBearishAnalysisService
         self.linearRegressionSerice = linearRegressionSerice
         self.priceChangeAnalysisService = priceChangeAnalysisService
         self.template = template
@@ -28,7 +28,8 @@ class SummaryAnalysisController:
                     ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
                     price_changes = self.priceChangeAnalysisService.calculate_price_change(ticker_data)
 
-                    bullish_vs_bearish_totals = self.tickerFourYearAnalysisService.analyze_dataframe(ticker_data)
+                    bullish_vs_bearish_totals = self.bullishVsBearishAnalysisService.analyze_dataframe(ticker_data)
+
                     slope_and_rsquare_totals = self.linearRegressionSerice.calculate_slope_and_rsquare(ticker_data)
 
         return render_template(self.template, tickers = tickers, from_date=from_date, till_date= till_date,

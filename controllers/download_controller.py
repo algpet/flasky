@@ -19,18 +19,17 @@ class DownloadController:
 
         ticker_data = self.tickerRateService.get_rate(tickers, from_date, till_date)
 
-        dest_file = 'static/excel/excel_dummy2.xlsm'
+        dest_file = 'static/excel/iteration8copy.xlsx'
+        shutil.copy('static/excel/iteration8.xlsx', dest_file)
 
-        shutil.copy('static/excel/excel_dummy1.xlsm', dest_file)
 
         wb = load_workbook(filename=dest_file)
-        ws = wb["Summary"]
-        ws["b4"] = tickers
-        ws["b5"] = from_date
-        ws["b6"] = till_date
+        ws = wb["Analysis"]
+        ws["F7"] = tickers
+        ws["F6"] = ticker_data.iloc[0]['Close']
 
-        ws["d4"] = ticker_data.iloc[0]['Close']
-
+        #ws["F6"] = from_date
+        #ws["b6"] = till_date
         #ws["d4"] = ticker_data[0]["Close"]
         wb.save(dest_file)
         print(time.time())
