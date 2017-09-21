@@ -34,6 +34,7 @@ class ParameterService:
         volatility = 76.5
         interest = 1.5
         dividend = 0.0
+
         return underlyingPrice,days,volatility,interest,dividend
 
     def process_options_params(self,request):
@@ -45,7 +46,6 @@ class ParameterService:
         return underlyingPrice,  days, volatility, interest, dividend
 
     def process_options_params_ajax(self,request):
-        print(request.args)
         optionSide = request.args.get('optionSide')
         underlyingPrice = float(request.args.get('underlyingPrice'))
         exercisePrice = float(request.args.get('exercisePrice'))
