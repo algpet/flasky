@@ -3,13 +3,14 @@ from flask import request
 
 from context_builder import application_context_builder
 
-
-
 app = Flask(__name__)
 
-rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController = application_context_builder()
+rawDataController , summaryAnalysisController , predictionController , \
+downloadController, optionsController, industryController = application_context_builder()
 
-"""
+
+
+"""""
 @app.after_request
 def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -48,6 +49,26 @@ def options_summary():
 @app.route('/options/marketPrice')
 def impliedVolatilityAjaxCall():
     return optionsController.serveImpliedVolatility(request)
+
+@app.route('/industry')
+def industry():
+    return industryController.dispatch(request)
+
+@app.route('/industry/add', methods=['POST'])
+def industry_add():
+    return industryController.add(request)
+
+@app.route('/industry/delete', methods=['POST'])
+def industry_delete():
+    return industryController.delete(request)
+
+@app.route('/industry/relations', methods=['POST'])
+def industry_relations():
+    return industryController.save_relations(request)
+
+@app.route('/industry/changeuser')
+def industry_changeuser():
+    return industryController.change_user(request)
 
 
 if __name__ == "__main__":

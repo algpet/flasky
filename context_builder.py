@@ -19,12 +19,17 @@ from services.dataframe_column_inserter_service import DataftrameColumnInserterS
 from services.option_implied_volatility_service import OptionImpliedVolatilityService
 from services.option_suggestion_column_labeling_service import OptionSuggestionColumnLabelingService
 
+from services.db.connection_factory import ConnectionFactory
+from services.db.utils import Utils
+from services.db.industry_crosstable_db_service import IndustryDbService,IndustryRelationsDbService
+from services.industry_crosstable_service import IndustryCrosstableService
+
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
 from controllers.prediction_controller import PredictionController
 from controllers.download_controller import DownloadController
 from controllers.options_controller import OptionsController
-
+from controllers.industry_controller import IndustryController
 
 
 def application_context_builder():
@@ -38,6 +43,12 @@ def application_context_builder():
     volatilityAnalysisService = VolatilityAnalysisService()
     plottingUtilService = PlottingUtilServce()
     optionSuggestionService = OptionSuggestionService()
+
+    connectionFactory = ConnectionFactory("db/flaskysqlite.db")
+    db_utils = Utils()
+    industryDbService = IndustryDbService(connectionFactory,db_utils)
+    industryRelationsDbService = IndustryRelationsDbService(connectionFactory,db_utils)
+    industryCrosstableService = IndustryCrosstableService(industryDbService,industryRelationsDbService)
 
     dataftameColumnInserterService = DataftrameColumnInserterService()
     optionImpliedVolatilityService = OptionImpliedVolatilityService(optionSuggestionService,dataftameColumnInserterService)
@@ -56,4 +67,6 @@ def application_context_builder():
     optionsController = OptionsController(parameterService,optionSuggestionService,optionImpliedVolatilityService,
                                           optionSuggestionColumnLabelingService,"options.html")
 
-    return rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController
+    industryController = IndustryController(industryCrosstableService,"industry.html")
+
+    return rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController,industryController
