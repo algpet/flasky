@@ -1,4 +1,5 @@
-from flask import render_template
+from flask import render_template , jsonify
+import json
 
 class IndustryController:
 
@@ -9,12 +10,14 @@ class IndustryController:
         self.user_id = 3
 
     def change_user(self,request):
-        self.user_id = request.args.get('user')
+        self.user_id = int(request.args.get('user'))
         return self.dispatch(request)
 
     def dispatch(self,request):
-        user_industries,crosstable = self.industryCrosstableService.get_by_user(self.user_id)
-        return render_template(self.template,user_industries=user_industries,crosstable=crosstable,user=self.user_id)
+        user_industries,user_industry_relations,crosstable = self.industryCrosstableService.get_by_user(self.user_id)
+
+        return render_template(self.template,user_industries=user_industries,user_industry_relations=user_industry_relations,
+                               crosstable=crosstable,user=self.user_id)
 
     def add(self,request):
         name = request.form.get('new_industry')
@@ -26,7 +29,6 @@ class IndustryController:
     def delete(self,request):
         try:
             raw_id = request.form.get('industry_id')
-            print("rawid" ,raw_id)
             id = int(raw_id)
             if id is not None:
                 self.industryCrosstableService.delete(id,self.user_id)

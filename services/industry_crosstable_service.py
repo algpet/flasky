@@ -9,7 +9,7 @@ class IndustryCrosstableService:
         user_industries = self.industryDbService.getByUser(user_id)
         user_industry_relations = self.industryRelationsDbService.getByUser(user_id)
         crosstable = self.get_crosstable(user_industries,user_industry_relations)
-        return user_industries,crosstable
+        return user_industries,user_industry_relations,crosstable
 
     def get_crosstable(self,user_industries,user_industry_relations):
         crosstable = {}
@@ -21,7 +21,10 @@ class IndustryCrosstableService:
                 crosstable[id1][id2] = 0
 
         for row in user_industry_relations:
-            crosstable[row['industry1_id']][row['industry2_id']] = row['score']
+            try:
+                crosstable[row['industry1_id']][row['industry2_id']] = row['score']
+            except Exception:
+                pass
         return crosstable
 
 
@@ -37,9 +40,18 @@ class IndustryCrosstableService:
 
     def delete(self,id,user_id):
         industry = self.industryDbService.getById(id)
+        print("delete industry",industry,"for userid",user_id)
+        print(industry is not None)
+        print(industry['user_id'] == user_id)
+        print(type(industry['user_id']))
+        print(type(user_id))
         if industry is not None and industry['user_id'] == user_id:
+            print("we are here")
             self.industryDbService.delete(id)
-        return self.industryDbService.delete(id)
+            print("deleting for relationid",id)
+            self.industryRelationsDbService.deleteByRelation(id)
+
+        #return self.industryDbService.delete(id)
 
     def add(self,user_id,name):
         self.industryDbService.insert(user_id,name)
@@ -58,6 +70,9 @@ class IndustryCrosstableService:
                 continue
 
             pair = self.get_relation_pair(entry)
+            if pair[0] == pair[1]:
+                continue
+
             self.industryRelationsDbService.insert(pair[0],pair[1],score,user_id,connection=connection)
         connection.commit()
 

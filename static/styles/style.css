@@ -26,6 +26,8 @@ h2{
   width: 1.5em;
   padding:8px;
 }
+
+
 .industry_rotate div {
      -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
        -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
@@ -35,7 +37,6 @@ h2{
 
    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
-
 
 }
 .industry_relation{

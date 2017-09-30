@@ -15,7 +15,7 @@ class CreateDbService:
                 "create table users( id integer PRIMARY KEY,name text NOT NULL)",
                 "CREATE INDEX users_id_index ON users(id)",
                 "CREATE INDEX users_name_index ON users(name)",
-                "create table industries( id integer PRIMARY KEY,name text NOT NULL,user_id integer)",
+                "create table industries( id integer PRIMARY KEY AUTOINCREMENT,name text NOT NULL,user_id integer)",
                 "CREATE INDEX industries_user_id ON industries(user_id)",
 
                 "create table industry_relations( id integer PRIMARY KEY,industry1_id integer,industry2_id integer,score integer,user_id integer)",

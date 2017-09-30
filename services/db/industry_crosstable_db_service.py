@@ -42,8 +42,9 @@ class IndustryRelationsDbService:
         self.SQLgetByUser = "SELECT * FROM Industry_Relations ir WHERE ir.user_id = ?"
         self.SQLinsertRelation = "INSERT INTO Industry_Relations(industry1_id,industry2_id,score,user_id) VALUES(?,?,?,?)"
         self.SQLupdateRelation = "UPDATE Industry_Relations ir SET ir.score=? WHERE ir.industry1_id=? and ir.industry2_id=?"
-        self.SQLdeleteByUser = "DELETE FROM Industry_Relations WHERE user_id = ?"
 
+        self.SQLdeleteByUser     = "DELETE FROM Industry_Relations WHERE user_id = ?"
+        self.SQLdeleteByRelation = "DELETE FROM Industry_Relations WHERE (industry1_id = ? or industry2_id = ?)"
 
     def getByUser(self,user_id):
         connection = self.connectionFactory.get_connection()
@@ -54,11 +55,11 @@ class IndustryRelationsDbService:
         if connection is None:
             connection = self.connectionFactory.get_connection()
             connection.execute(self.SQLinsertRelation,(id1,id2,score,user_id,))
-            connection.execute(self.SQLinsertRelation, (id2, id1, score, user_id,))
+            #connection.execute(self.SQLinsertRelation, (id2, id1, score, user_id,))
             connection.commit()
         else:
             connection.execute(self.SQLinsertRelation, (id1, id2, score, user_id,))
-            connection.execute(self.SQLinsertRelation, (id2, id1, score, user_id,))
+            #connection.execute(self.SQLinsertRelation, (id2, id1, score, user_id,))
 
     def update(self,name1,name2,score,user_id):
         connection = self.connectionFactory.get_connection()
@@ -72,3 +73,11 @@ class IndustryRelationsDbService:
             connection.commit()
         else:
             connection.execute(self.SQLdeleteByUser, (user_id,))
+
+    def deleteByRelation(self,relation_id,connection=None):
+        if connection is None:
+            connection = self.connectionFactory.get_connection()
+            connection.execute(self.SQLdeleteByRelation, (relation_id,relation_id))
+            connection.commit()
+        else:
+            connection.execute(self.SQLdeleteByRelation, (relation_id,relation_id))
