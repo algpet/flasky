@@ -70,7 +70,9 @@ def industry_delete():
 def industry_relations():
     return industryController.save_relations(request)
 
-
+@app.route('/industry/update', methods=['POST'])
+def industry_update():
+    return industryController.update_all(request)
 
 @app.route('/industry/changeuser')
 def industry_changeuser():

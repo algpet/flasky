@@ -2,6 +2,7 @@
             constructor(data){
                 this.name = data["name"];
                 this.id = data["id"];
+                this.desc = data["desc"]
 
                 this.relations = [];
                 this.knowies = [];
@@ -68,6 +69,9 @@
                     .attr("r",this.r * 1.5)
                     .style("fill", "orange");
 
+                d3.select("#rightbar")
+                    .html(this.industry.desc)
+
                 for(var rel in this.industry.relations){
                     let relation = this.industry.relations[rel];
                     let relationLine = relation.getView();
@@ -88,6 +92,9 @@
 
             mouseOut(){
                 this.showOff();
+
+                d3.select("#rightbar")
+                    .html("")
 
                  for(var rel in this.industry.relations){
                     let relation = this.industry.relations[rel];

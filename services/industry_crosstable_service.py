@@ -105,6 +105,12 @@ class IndustryCrosstableService:
             self.industryRelationsDbService.insert(pair[0],pair[1],score,user_id,connection=connection)
         connection.commit()
 
+    def update(self,entries):
+        connection = self.industryDbService.connectionFactory.get_connection()
+        for entry in entries:
+            self.industryDbService.update(entry['id'],entry['user_id'],entry['name'],entry['desc'],connection=connection)
+        connection.commit()
+
 
     def get_relation_pair(self,form_name):
         data = form_name.split(":")[1]

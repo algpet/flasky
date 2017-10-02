@@ -5,10 +5,11 @@ class IndustryDbService():
         self.connectionFactory = connectionFactory
         self.utils = utils
 
-        self.SQLgetById = "SELECT id,name,user_id FROM Industries WHERE id=?"
-        self.SQLgetByUser = "SELECT id,name,user_id FROM Industries WHERE user_id=?"
+        self.SQLgetById = "SELECT id,name,desc,user_id FROM Industries WHERE id=?"
+        self.SQLgetByUser = "SELECT id,name,desc,user_id FROM Industries WHERE user_id=?"
         self.SQLinsertIndustry =  "INSERT INTO Industries(name,user_id) VALUES(?,?)"
         self.SQLdeleteIndustry = "DELETE FROM Industries WHERE id=?"
+        self.SQLupdateIndustry = "UPDATE Industries SET name = ? , desc = ? WHERE id = ? and user_id = ?"
 
     def getByUser(self,user_id,connection=None):
         if connection is None:
@@ -31,6 +32,15 @@ class IndustryDbService():
             connection.commit()
         else:
             result = connection.execute(self.SQLinsertIndustry, (name, user_id,))
+
+    def update(self,id,user_id,name,desc,connection=None):
+        if connection is None:
+            connection = self.connectionFactory.get_connection()
+            connection.execute(self.SQLupdateIndustry, (name,desc,id,user_id))
+            connection.commit()
+        else:
+            connection.execute(self.SQLupdateIndustry, (name, desc, id, user_id))
+
 
     def delete(self,id):
         connection = self.connectionFactory.get_connection()
