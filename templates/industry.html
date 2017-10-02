@@ -15,14 +15,13 @@
              <div>
                  <h4>Legend</h4>
                  <ul>
-                    <li>No relation</li>
-                    <li>Know Each Other</li>
-                    <li>Friends</li>
+                    <li>0 - No relation</li>
+                    <li>1 - Dependent</li>
+                    <li>2 - Interdependent</li>
                  </ul>
              </div>
 
              <form id="reltable" name="save_relations" action="/industry/relations" method="post">
-
 
                 <table border="solid">
                      <tr>
@@ -93,13 +92,27 @@
                         </td>
                     </tr>
                  </table>
-
              </form>
+
+             {% if user_industries | length == 0 %}
+                <br>   <br>
+                    <a href = "/industry/template">Start with template</a>
+                <br>   <br>
+             {% endif%}
+
          </div>
     </div>
 
 
     <div class="row col-lg-12 panel" id="rowforsvg">
+        <div>
+            <h4>Legend</h4>
+            <ul>
+                <li>Blue line - Dependent</li>
+                <li>Green line - Interdependent</li>
+            </ul>
+        </div>
+
 
         <!--
         <pre>{{user_industries | tojson(indent=4)}}</pre>

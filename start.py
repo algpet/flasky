@@ -58,6 +58,10 @@ def industry():
 def industry_add():
     return industryController.add(request)
 
+@app.route('/industry/template', methods=['GET'])
+def industry_template():
+    return industryController.get_template(request)
+
 @app.route('/industry/delete', methods=['POST'])
 def industry_delete():
     return industryController.delete(request)
@@ -65,6 +69,8 @@ def industry_delete():
 @app.route('/industry/relations', methods=['POST'])
 def industry_relations():
     return industryController.save_relations(request)
+
+
 
 @app.route('/industry/changeuser')
 def industry_changeuser():

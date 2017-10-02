@@ -1,15 +1,17 @@
 
 class IndustryCrosstableService:
 
-    def __init__(self,industryDbService,industryRelationsDbService):
+    def __init__(self,industryDbService,industryRelationsDbService,industryCrosstableDefaultTemplateService):
         self.industryDbService = industryDbService
         self.industryRelationsDbService = industryRelationsDbService
+        self.industryCrosstableDefaultTemplateService = industryCrosstableDefaultTemplateService
 
     def get_by_user(self,user_id):
         user_industries = self.industryDbService.getByUser(user_id)
         user_industry_relations = self.industryRelationsDbService.getByUser(user_id)
         crosstable = self.get_crosstable(user_industries,user_industry_relations)
         return user_industries,user_industry_relations,crosstable
+
 
     def get_crosstable(self,user_industries,user_industry_relations):
         crosstable = {}
@@ -28,6 +30,38 @@ class IndustryCrosstableService:
         return crosstable
 
 
+    def get_template(self,user_id):
+        own = self.get_by_user(user_id)
+        if len(own[0]) != 0:
+            return own
+        template_user_id = self.industryCrosstableDefaultTemplateService.get_template_owner()
+        template_industries,template_industry_relations,template_crosstable = self.get_by_user(template_user_id)
+
+        name_to_id_map = {}
+        for template_industry in template_industries:
+            name_to_id_map[template_industry['name']] = template_industry['id']
+
+        connection = self.industryDbService.connectionFactory.get_connection()
+        for industry in template_industries:
+            self.industryDbService.insert(user_id, industry['name'],connection)
+        saved_industries = self.industryDbService.getByUser(user_id,connection)
+
+        template_id_to_new_id_map = {}
+        for saved_industry in saved_industries:
+            template_id_to_new_id_map[name_to_id_map[saved_industry['name']]] = saved_industry['id']
+
+
+        for entry in template_industry_relations:
+            self.industryRelationsDbService.insert(template_id_to_new_id_map[entry['industry1_id']],
+                                                   template_id_to_new_id_map[entry['industry2_id']],
+                                                   entry['score'],user_id,
+                                                   connection=connection)
+        connection.commit()
+
+        return self.get_by_user(user_id)
+
+
+
     def user_have_industry(self,user_id,name):
         user_industries = self.industryDbService.getByUser(user_id)
         for industry in user_industries:
@@ -40,11 +74,6 @@ class IndustryCrosstableService:
 
     def delete(self,id,user_id):
         industry = self.industryDbService.getById(id)
-        print("delete industry",industry,"for userid",user_id)
-        print(industry is not None)
-        print(industry['user_id'] == user_id)
-        print(type(industry['user_id']))
-        print(type(user_id))
         if industry is not None and industry['user_id'] == user_id:
             print("we are here")
             self.industryDbService.delete(id)

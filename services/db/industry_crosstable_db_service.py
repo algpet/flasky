@@ -10,10 +10,12 @@ class IndustryDbService():
         self.SQLinsertIndustry =  "INSERT INTO Industries(name,user_id) VALUES(?,?)"
         self.SQLdeleteIndustry = "DELETE FROM Industries WHERE id=?"
 
-    def getByUser(self,user_id):
-        connection = self.connectionFactory.get_connection()
+    def getByUser(self,user_id,connection=None):
+        if connection is None:
+            connection = self.connectionFactory.get_connection()
         industries = self.utils.get_as_dictionary_list(connection=connection,sql=self.SQLgetByUser,params=(user_id,))
         return industries
+
 
     def getById(self,id):
         connection = self.connectionFactory.get_connection()
@@ -22,10 +24,13 @@ class IndustryDbService():
             return industries[0]
         return None
 
-    def insert(self,user_id,name):
-        connection = self.connectionFactory.get_connection()
-        result = connection.execute(self.SQLinsertIndustry,(name,user_id,))
-        connection.commit()
+    def insert(self,user_id,name,connection=None):
+        if connection is None:
+            connection = self.connectionFactory.get_connection()
+            result = connection.execute(self.SQLinsertIndustry,(name,user_id,))
+            connection.commit()
+        else:
+            result = connection.execute(self.SQLinsertIndustry, (name, user_id,))
 
     def delete(self,id):
         connection = self.connectionFactory.get_connection()

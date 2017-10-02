@@ -6,8 +6,7 @@ class IndustryController:
     def __init__(self,industryCrosstableService,template):
         self.industryCrosstableService = industryCrosstableService
         self.template = template
-
-        self.user_id = 3
+        self.user_id = 1
 
     def change_user(self,request):
         self.user_id = int(request.args.get('user'))
@@ -24,6 +23,10 @@ class IndustryController:
         if name is not None and name != '':
             if not self.industryCrosstableService.user_have_industry(user_id=self.user_id,name=name):
                 self.industryCrosstableService.add(self.user_id,name)
+        return self.dispatch(request)
+
+    def get_template(self,request):
+        self.industryCrosstableService.get_template(self.user_id)
         return self.dispatch(request)
 
     def delete(self,request):
