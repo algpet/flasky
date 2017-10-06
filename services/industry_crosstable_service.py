@@ -43,7 +43,7 @@ class IndustryCrosstableService:
 
         connection = self.industryDbService.connectionFactory.get_connection()
         for industry in template_industries:
-            self.industryDbService.insert(user_id, industry['name'],connection)
+            self.industryDbService.insert_full(user_id, industry['name'],industry['desc'],connection=connection)
         saved_industries = self.industryDbService.getByUser(user_id,connection)
 
         template_id_to_new_id_map = {}
