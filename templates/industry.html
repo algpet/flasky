@@ -34,16 +34,19 @@
                      <tr>
                          <td id="firstcell">
                                 <input type="submit"
-                                    value="Save relations"
+                                    value="Update"
                                     class="btn btn-success btn-block"
-                                    formaction="/industry/relations"
+                                    formaction="/industry/update"
                                     />
                                 <br><br>
+
+                             <!--
                                 <input type="submit"
                                     value="Update industries"
                                     class="btn btn-success btn-block"
                                     formaction="/industry/update"
                                     />
+                              -->
                          </td>
                         {% for user_industry in user_industries%}
                             <th class='industry_rotate'><div>{{user_industry['name']}}</div></th>

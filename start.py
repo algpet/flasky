@@ -9,7 +9,6 @@ rawDataController , summaryAnalysisController , predictionController , \
 downloadController, optionsController, industryController = application_context_builder()
 
 
-
 """""
 @app.after_request
 def add_header(r):
@@ -66,9 +65,9 @@ def industry_template():
 def industry_delete():
     return industryController.delete(request)
 
-@app.route('/industry/relations', methods=['POST'])
-def industry_relations():
-    return industryController.save_relations(request)
+#@app.route('/industry/edit', methods=['POST'])
+#def industry_relations():
+#    return industryController.save_relations(request)
 
 @app.route('/industry/update', methods=['POST'])
 def industry_update():

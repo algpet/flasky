@@ -25,19 +25,6 @@ class IndustryController:
                 self.industryCrosstableService.add(self.user_id,name)
         return self.dispatch(request)
 
-    def update_all(self,request):
-
-        try:
-            entries = []
-            for item in request.form:
-                if item.startswith("name,"):
-                    entries.append({'id':item.split(',')[1],'user_id':self.user_id,'name':request.form[item],'desc':request.form[item.replace('name','desc')] })
-            self.industryCrosstableService.update(entries)
-        except Exception as error:
-            pass
-
-        return self.dispatch(request)
-
     def get_template(self,request):
         self.industryCrosstableService.get_template(self.user_id)
         return self.dispatch(request)
@@ -53,8 +40,11 @@ class IndustryController:
             pass
         return self.dispatch(request)
 
-    def save_relations(self,request):
-        self.industryCrosstableService.save_relations(request.form,self.user_id)
+    def update_all(self,request):
+        try:
+            self.industryCrosstableService.update(request.form,self.user_id)
+        except Exception as error:
+            pass
         return self.dispatch(request)
 
 

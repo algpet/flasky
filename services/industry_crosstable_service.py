@@ -85,9 +85,19 @@ class IndustryCrosstableService:
     def add(self,user_id,name):
         self.industryDbService.insert(user_id,name)
 
-    def save_relations(self,form_data,user_id):
 
+
+    def update(self,form_data,user_id):
         connection = self.industryDbService.connectionFactory.get_connection()
+
+        entries = []
+        for item in form_data:
+            if item.startswith("name,"):
+                entries.append({'id': item.split(',')[1], 'user_id': user_id, 'name': form_data[item],'desc': form_data[item.replace('name', 'desc')]})
+
+        for entry in entries:
+            self.industryDbService.update(entry['id'],entry['user_id'],entry['name'],entry['desc'],connection=connection)
+
         self.industryRelationsDbService.deleteByUser(user_id,connection=connection)
         for entry in form_data:
 
@@ -104,13 +114,6 @@ class IndustryCrosstableService:
 
             self.industryRelationsDbService.insert(pair[0],pair[1],score,user_id,connection=connection)
         connection.commit()
-
-    def update(self,entries):
-        connection = self.industryDbService.connectionFactory.get_connection()
-        for entry in entries:
-            self.industryDbService.update(entry['id'],entry['user_id'],entry['name'],entry['desc'],connection=connection)
-        connection.commit()
-
 
     def get_relation_pair(self,form_name):
         data = form_name.split(":")[1]
