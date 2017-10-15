@@ -22,15 +22,19 @@ from services.option_suggestion_column_labeling_service import OptionSuggestionC
 from services.db.connection_factory import ConnectionFactory
 from services.db.utils import Utils
 from services.db.industry_crosstable_db_service import IndustryDbService,IndustryRelationsDbService
+from services.db.visitor_db_service import VisitorDbService
 from services.industry_crosstable_service import IndustryCrosstableService
 from services.industry_crosstable_default_template_service import IndustryCrosstableDefaultTemplateService
 
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
+from controllers.summary_analysis_recommendation_controller import SummaryAnalysisRecommendationController
 from controllers.prediction_controller import PredictionController
 from controllers.download_controller import DownloadController
 from controllers.options_controller import OptionsController
+from controllers.profit_controller import ProfitController
 from controllers.industry_controller import IndustryController
+
 
 
 def application_context_builder():
@@ -47,10 +51,12 @@ def application_context_builder():
 
     connectionFactory = ConnectionFactory("db/flaskysqlite.db")
     db_utils = Utils()
+
+    visitorDbService = VisitorDbService(connectionFactory,db_utils)
     industryDbService = IndustryDbService(connectionFactory,db_utils)
     industryRelationsDbService = IndustryRelationsDbService(connectionFactory,db_utils)
     industryCrosstableDefaultTemplateService = IndustryCrosstableDefaultTemplateService()
-    industryCrosstableService = IndustryCrosstableService(industryDbService,industryRelationsDbService,industryCrosstableDefaultTemplateService)
+    industryCrosstableService = IndustryCrosstableService(industryDbService,industryRelationsDbService)
 
     dataftameColumnInserterService = DataftrameColumnInserterService()
     optionImpliedVolatilityService = OptionImpliedVolatilityService(optionSuggestionService,dataftameColumnInserterService)
@@ -61,14 +67,20 @@ def application_context_builder():
 
     rawDataController = RawDataController(parameterService,tickerRateService,tickerAnalysisService, tickerNameService, "raw_data.html")
     summaryAnalysisController = SummaryAnalysisController(parameterService,tickerRateService,tickerAnalysisService,
-                                                            bullishVsBearishAnalysisService, linearRegressionSerice,
-                                                            priceChangeAnalysisService, "summary_analysis.html")
+                                            bullishVsBearishAnalysisService, linearRegressionSerice,
+                                            priceChangeAnalysisService, "summary_analysis.html")
+
+    summaryAnalysisRecommendationController = SummaryAnalysisRecommendationController(parameterService, tickerRateService, tickerAnalysisService,
+                                            bullishVsBearishAnalysisService, linearRegressionSerice,
+                                            priceChangeAnalysisService, "recommendation.html")
 
     predictionController = PredictionController(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService, "prediction.html")
     downloadController = DownloadController(parameterService,tickerRateService)
     optionsController = OptionsController(parameterService,optionSuggestionService,optionImpliedVolatilityService,
                                           optionSuggestionColumnLabelingService,"options.html")
+    profitController = ProfitController("profit.html")
 
-    industryController = IndustryController(industryCrosstableService,"industry.html")
+    industryController = IndustryController(industryCrosstableService,visitorDbService,industryCrosstableDefaultTemplateService,"industry.html")
 
-    return rawDataController , summaryAnalysisController , predictionController , downloadController,optionsController,industryController
+    return rawDataController , summaryAnalysisController , summaryAnalysisRecommendationController,\
+           predictionController , downloadController,optionsController, profitController , industryController

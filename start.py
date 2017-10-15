@@ -5,9 +5,8 @@ from context_builder import application_context_builder
 
 app = Flask(__name__)
 
-rawDataController , summaryAnalysisController , predictionController , \
-downloadController, optionsController, industryController = application_context_builder()
-
+rawDataController , summaryAnalysisController , summaryAnalysisRecommendationController, predictionController , \
+downloadController, optionsController, profitController , industryController = application_context_builder()
 
 """""
 @app.after_request
@@ -20,14 +19,16 @@ def add_header(r):
 """
 
 
-@app.route("/raw_data", methods=['GET', 'POST'])
-def raw_requests():
-    return rawDataController.dispatch(request)
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/summary_analysis", methods=['GET', 'POST'])
 def four_year_analysis():
     return summaryAnalysisController.dispatch(request)
+
+@app.route("/recommendation", methods=['GET'])
+def summaryAnalysisRecommendation():
+    print(123)
+    return summaryAnalysisRecommendationController.dispatch(request)
 
 
 @app.route("/prediction", methods=['GET', 'POST'])
@@ -43,6 +44,10 @@ def download_excel():
 @app.route("/options", methods=['GET', 'POST'])
 def options_summary():
     return optionsController.dispatch(request)
+
+@app.route("/profit", methods=['GET'])
+def profit():
+    return profitController.dispatch(request)
 
 
 @app.route('/options/marketPrice')
@@ -65,17 +70,22 @@ def industry_template():
 def industry_delete():
     return industryController.delete(request)
 
-#@app.route('/industry/edit', methods=['POST'])
-#def industry_relations():
-#    return industryController.save_relations(request)
-
 @app.route('/industry/update', methods=['POST'])
 def industry_update():
     return industryController.update_all(request)
 
-@app.route('/industry/changeuser')
-def industry_changeuser():
-    return industryController.change_user(request)
+@app.route('/industry/subscribe')
+def industry_subscribe():
+    return industryController.subscribe(request)
+
+@app.route('/industry/unsubscribe')
+def industry_unsubscribe():
+    return industryController.unsubscribe(request)
+
+
+@app.route("/raw_data", methods=['GET', 'POST'])
+def raw_requests():
+    return rawDataController.dispatch(request)
 
 
 if __name__ == "__main__":

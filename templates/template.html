@@ -25,25 +25,33 @@
             <div class="col-lg-10 col-lg-offset-1">
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li {% block active2 %}{% endblock %}>
+                        <li {% block summary_analysis_active %}{% endblock %}>
                             <a href="/summary_analysis" role="button">
                                 Summary Analysis
                             </a>
                         </li>
-                        <li {% block active5 %}{% endblock %}>
+                        <li {% block recommendation_active %}{% endblock %}>
+                            <a href="/recommendation" role="button">
+                                Recommendation
+                            </a>
+                        </li>
+
+
+                        <li {% block prediction_active %}{% endblock %}>
                             <a href="/prediction" role="button">
                                 Prediction
                             </a>
                         </li>
-                        <li {% block active1 %}{% endblock %}>
-                            <a href="/raw_data" role="button">
-                                Raw Data
+
+                        <li {% block options_active %}{% endblock %}>
+                            <a href="/options" role="button">
+                                Options
                             </a>
                         </li>
 
-                        <li {% block active6 %}{% endblock %}>
-                            <a href="/options" role="button">
-                                Options
+                        <li {% block profit_active %}{% endblock %}>
+                            <a href="/profit" role="button">
+                                Profit
                             </a>
                         </li>
 
@@ -55,9 +63,16 @@
                         </li>
                         -->
 
-                        <li {% block active7 %}{% endblock %}>
+                        <li {% block industry_active %}{% endblock %}>
                             <a href="/industry" role="button">
                                 Industry
+                            </a>
+                        </li>
+
+
+                        <li {% block raw_data_active %}{% endblock %}>
+                            <a href="/raw_data" role="button">
+                                Raw Data
                             </a>
                         </li>
 

@@ -3,7 +3,7 @@
 {% block head %}
     {{ super() }}
 {% endblock %}
-{% block active7 %}
+{% block industry_active %}
     class="active"
 {%endblock%}
 {% block content %}
@@ -29,6 +29,9 @@
              </div>
 
              <form id="reltable" method="post">
+                 {%if key is not none%}
+
+                 {%endif%}
 
                 <table border="solid">
                      <tr>
@@ -67,7 +70,6 @@
 
                                     {%if user_industry1['id'] > user_industry2['id'] %}
                                         <select name="relation:{{user_industry1['id']}},{{user_industry2['id']}}"  class="industry_relation" >
-
 
                                             {% for relation in [0,1,2] %}
                                                 {%if relation == crosstable[user_industry1['id']][user_industry2['id']]%}
@@ -129,7 +131,7 @@
         
     <div class="row">
         <div class="row col-lg-12 panel" id="rowforsvg">
-            <h2>Industry graph (user {{user}})</h2>
+            <h2>Industry graph</h2>
             <div>
                 <h4>Legend</h4>
                 <ul>

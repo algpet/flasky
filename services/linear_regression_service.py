@@ -16,12 +16,11 @@ class LinearRegressionSerice:
         }
         pass
 
-    def calculate_slope_and_rsquare(self,df):
+    def calculate_slope_and_rsquare(self,df,styling=True):
         period_data = {}
         for tag,period in self.periods.items():
             period_data[tag] = self.calculate_slope_and_rsquare_for_period(df,period)
-        df = self.pack_to_dataframe(period_data)
-
+        df = self.pack_to_dataframe(period_data,styling=styling)
         return df
 
 
@@ -39,7 +38,7 @@ class LinearRegressionSerice:
         return {"slope":slope , "r_squared":r_value ** 2}
 
 
-    def pack_to_dataframe(self,period_data):
+    def pack_to_dataframe(self,period_data,styling=True):
         df_9month = pd.DataFrame({'slope': period_data['recent9month']['slope'],
                                  'r_squared': period_data['recent9month']['r_squared']}, index=['9month'])
 
@@ -49,7 +48,11 @@ class LinearRegressionSerice:
         df_4years = pd.DataFrame({'slope': period_data['recent4years']['slope'],
                           'r_squared': period_data['recent4years']['r_squared']}, index=['4years'])
         df = pd.concat([df_9month, df_1year, df_4years])
-        return self.apply_styling(df)
+
+        if styling:
+            return self.apply_styling(df)
+        else:
+            return df
 
 
     def apply_styling(self,df):

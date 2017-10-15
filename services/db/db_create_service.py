@@ -11,10 +11,18 @@ class CreateDbService:
         try:
             self.db = sqlite3.connect("../db/flaskysqlite.db")
             self.db_available = True
+
             self.sqls = [
+
+                "CREATE TABLE visitors(id integer PRIMARY KEY AUTOINCREMENT,ip text not null)",
+                "CREATE INDEX visitors_id_index ON visitors(id)",
+                "CREATE INDEX visitors_ip_index ON visitors(ip)",
+
                 "create table users( id integer PRIMARY KEY,name text NOT NULL)",
                 "CREATE INDEX users_id_index ON users(id)",
                 "CREATE INDEX users_name_index ON users(name)",
+
+
                 "create table industries( id integer PRIMARY KEY AUTOINCREMENT,name text NOT NULL,desc text ,user_id integer)",
                 "CREATE INDEX industries_user_id ON industries(user_id)",
 
@@ -36,6 +44,7 @@ class CreateDbService:
                 "Select * from industry_relations",
 
             ]
+
             for sql in self.sqls:
                 result = self.db.execute(sql)
                 print(sql,result)
@@ -50,9 +59,10 @@ class CreateDbService:
         self.db.execute(sql)
 
 
-
-
 dbs = CreateDbService()
+
+
+
 
 
 

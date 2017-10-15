@@ -63,7 +63,6 @@ class OptionSuggestionService:
 
 
     def volatility_factor(self,volatility,time):
-        print("vola")
         return volatility * math.sqrt(time)
 
 

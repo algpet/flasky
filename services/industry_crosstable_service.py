@@ -1,16 +1,20 @@
 
 class IndustryCrosstableService:
 
-    def __init__(self,industryDbService,industryRelationsDbService,industryCrosstableDefaultTemplateService):
+    def __init__(self,industryDbService,industryRelationsDbService):
         self.industryDbService = industryDbService
         self.industryRelationsDbService = industryRelationsDbService
-        self.industryCrosstableDefaultTemplateService = industryCrosstableDefaultTemplateService
 
-    def get_by_user(self,user_id):
-        user_industries = self.industryDbService.getByUser(user_id)
-        user_industry_relations = self.industryRelationsDbService.getByUser(user_id)
-        crosstable = self.get_crosstable(user_industries,user_industry_relations)
-        return user_industries,user_industry_relations,crosstable
+    def get_by_user(self,visitor):
+
+        if visitor is not None:
+            user_id = visitor["id"]
+            user_industries = self.industryDbService.getByUser(user_id)
+            user_industry_relations = self.industryRelationsDbService.getByUser(user_id)
+            crosstable = self.get_crosstable(user_industries,user_industry_relations)
+            return user_industries,user_industry_relations,crosstable
+        else:
+            return [],[],{}
 
 
     def get_crosstable(self,user_industries,user_industry_relations):
@@ -30,12 +34,15 @@ class IndustryCrosstableService:
         return crosstable
 
 
-    def get_template(self,user_id):
-        own = self.get_by_user(user_id)
+    def get_template(self,from_visitor,to_visitor):
+        if to_visitor is None:
+            return self.get_by_user(to_visitor)
+        own = self.get_by_user(to_visitor)
+        user_id = to_visitor["id"]
         if len(own[0]) != 0:
             return own
-        template_user_id = self.industryCrosstableDefaultTemplateService.get_template_owner()
-        template_industries,template_industry_relations,template_crosstable = self.get_by_user(template_user_id)
+
+        template_industries,template_industry_relations,template_crosstable = self.get_by_user(from_visitor)
 
         name_to_id_map = {}
         for template_industry in template_industries:
@@ -57,39 +64,48 @@ class IndustryCrosstableService:
                                                    entry['score'],user_id,
                                                    connection=connection)
         connection.commit()
-
-        return self.get_by_user(user_id)
-
+        return self.get_by_user(to_visitor)
 
 
-    def user_have_industry(self,user_id,name):
+    def user_have_industry(self,visitor,name):
+        if visitor is None:
+            return False
+        user_id = visitor["id"]
         user_industries = self.industryDbService.getByUser(user_id)
         for industry in user_industries:
             if industry['name'] == name:
                 return True
         return False
 
+
     def get_by_id(self, id):
         return self.industryDbService.getById(id)
 
-    def delete(self,id,user_id):
+
+    def delete(self,id,visitor):
+        if visitor is None:
+            return
+        user_id = visitor["id"]
         industry = self.industryDbService.getById(id)
         if industry is not None and industry['user_id'] == user_id:
-            print("we are here")
             self.industryDbService.delete(id)
-            print("deleting for relationid",id)
             self.industryRelationsDbService.deleteByRelation(id)
 
         #return self.industryDbService.delete(id)
 
-    def add(self,user_id,name):
+    def add(self,visitor,name):
+        if visitor is None:
+            return
+        user_id = visitor["id"]
         self.industryDbService.insert(user_id,name)
 
 
+    def update(self,form_data,visitor):
+        if visitor is None:
+            return
+        user_id = visitor["id"]
 
-    def update(self,form_data,user_id):
         connection = self.industryDbService.connectionFactory.get_connection()
-
         entries = []
         for item in form_data:
             if item.startswith("name,"):

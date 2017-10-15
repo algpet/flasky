@@ -14,14 +14,20 @@ class BullishVsBearishAnalysisService:
             "past1year"  : [608, 1009] # o_O
         }
 
+    def get_used_range(self,df,period):
+        period = self.periods[period]
+        df = df[period[0]:period[1]]
+        return (df.index[-1],df.index[0],)
+
+    def get_edge_values(self,df,period,column):
+        period = self.periods[period]
+        df = df[period[0]:period[1]]
+        return (df.iloc[-1][column], df.iloc[0][column],)
 
     def analyze_dataframe(self, df):
-        print(df.shape)
         bb_counts = {}
         for label , period in self.periods.items():
-
             bb_counts[label] = self.count_markers(df,period)
-            print(label, bb_counts[label], period)
 
         df = self.pack_to_dataframe(bb_counts)
         return df
@@ -34,8 +40,6 @@ class BullishVsBearishAnalysisService:
         return {'bearish':bearish,'bullish':bullish}
 
     def pack_to_dataframe(self,bb_counts):
-
-        print(bb_counts)
 
         df_3month =  pd.DataFrame({'recent_bullish': bb_counts['recent3month']['bullish'],
                                    'recent_bearish': bb_counts['recent3month']['bearish'],

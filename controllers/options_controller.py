@@ -28,7 +28,6 @@ class OptionsController:
 
 
     def serveImpliedVolatility(self,request):
-        print("meow")
         optionSide , underlyingPrice, exercisePrice, days, targetPrice, interest, dividend = self.parameterService.process_options_params_ajax(request)
 
         if optionSide == "call":
