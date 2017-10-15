@@ -14,7 +14,6 @@ class SummaryAnalysisRecommendationController:
         self.template = template
 
     def dispatch(self,request):
-        print("hiiii")
         model = {}
 
         try:
@@ -23,7 +22,6 @@ class SummaryAnalysisRecommendationController:
             return redirect("/summary_analysis")
 
         if ticker is not None:
-            print("ticker")
             foo , from_date, till_date = self.parameterService.init_params(self.time_frame)
             bullish_vs_bearish_totals = None
             slope_and_rsquare_totals = None

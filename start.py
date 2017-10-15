@@ -27,7 +27,6 @@ def four_year_analysis():
 
 @app.route("/recommendation", methods=['GET'])
 def summaryAnalysisRecommendation():
-    print(123)
     return summaryAnalysisRecommendationController.dispatch(request)
 
 

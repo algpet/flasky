@@ -2,34 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ba2e3010-c986-4b6c-9a52-a2b110da8d71" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/dummy_controller.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/profit_controller.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/services/db/visitor_db_service.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/profit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/recommendation.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/db/flaskysqlite.db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/img/graph722427933.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/img/graph761211823.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/context_builder.py" afterPath="$PROJECT_DIR$/context_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/industry_controller.py" afterPath="$PROJECT_DIR$/controllers/industry_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/options_controller.py" afterPath="$PROJECT_DIR$/controllers/options_controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/bullish_vs_bearish_analysis_service.py" afterPath="$PROJECT_DIR$/services/bullish_vs_bearish_analysis_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/db/connection_factory.py" afterPath="$PROJECT_DIR$/services/db/connection_factory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/db/db_create_service.py" afterPath="$PROJECT_DIR$/services/db/db_create_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/industry_crosstable_default_template_service.py" afterPath="$PROJECT_DIR$/services/industry_crosstable_default_template_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/industry_crosstable_service.py" afterPath="$PROJECT_DIR$/services/industry_crosstable_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/linear_regression_service.py" afterPath="$PROJECT_DIR$/services/linear_regression_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/option_implied_volatility_service.py" afterPath="$PROJECT_DIR$/services/option_implied_volatility_service.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/services/option_suggestion_service.py" afterPath="$PROJECT_DIR$/services/option_suggestion_service.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" afterPath="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/start.py" afterPath="$PROJECT_DIR$/start.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/industry.html" afterPath="$PROJECT_DIR$/templates/industry.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/options.html" afterPath="$PROJECT_DIR$/templates/options.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/prediction.html" afterPath="$PROJECT_DIR$/templates/prediction.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/raw_data.html" afterPath="$PROJECT_DIR$/templates/raw_data.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/summary_analysis.html" afterPath="$PROJECT_DIR$/templates/summary_analysis.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/template.html" afterPath="$PROJECT_DIR$/templates/template.html" />
     </list>
     <ignored path="untitled3.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,21 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="start.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="start.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/start.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="23" column="29" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="29" />
+            <state relative-caret-position="-764">
+              <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="summary_analysis_recommendation_controller.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="summary_analysis_recommendation_controller.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+            <state relative-caret-position="266">
+              <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -134,8 +109,8 @@
         <option value="$PROJECT_DIR$/services/bullish_vs_bearish_analysis_service.py" />
         <option value="$PROJECT_DIR$/services/linear_regression_service.py" />
         <option value="$PROJECT_DIR$/templates/recommendation.html" />
-        <option value="$PROJECT_DIR$/start.py" />
         <option value="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" />
+        <option value="$PROJECT_DIR$/start.py" />
       </list>
     </option>
   </component>
@@ -185,66 +160,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flasky" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -580,7 +495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1507236255806</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="bugfixes">
+      <created>1508108586843</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1508108586843</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -844,6 +766,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="954">
           <caret line="53" column="38" selection-start-line="53" selection-start-column="38" selection-end-line="53" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -851,6 +774,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-18">
           <caret line="18" column="42" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -858,6 +782,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -997,18 +922,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/start.py">
+    <entry file="file://$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="23" column="29" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="29" />
+        <state relative-caret-position="266">
+          <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py">
+    <entry file="file://$PROJECT_DIR$/start.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        <state relative-caret-position="-764">
+          <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
           <folding />
         </state>
       </provider>
