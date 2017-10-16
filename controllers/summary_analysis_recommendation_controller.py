@@ -17,7 +17,6 @@ class SummaryAnalysisRecommendationController:
         model = {}
         ticker = None
 
-        print(request.args)
         if "ticker" in request.args:
             ticker = request.args["ticker"]
         elif "tickers" in request.form:
