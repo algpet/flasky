@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ba2e3010-c986-4b6c-9a52-a2b110da8d71" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" afterPath="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/profit_controller.py" afterPath="$PROJECT_DIR$/controllers/profit_controller.py" />
     </list>
     <ignored path="untitled3.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,11 +43,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="summary_analysis_recommendation_controller.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="summary_analysis_recommendation_controller.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="110">
               <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dummy_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/dummy_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="industry_controller.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/industry_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="882">
+              <caret line="60" column="85" selection-start-line="60" selection-start-column="85" selection-end-line="60" selection-end-column="85" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profit_controller.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controllers/profit_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="72">
+              <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -123,7 +153,6 @@
         <option value="$PROJECT_DIR$/templates/prediction.html" />
         <option value="$PROJECT_DIR$/templates/template.html" />
         <option value="$PROJECT_DIR$/controllers/dummy_controller.py" />
-        <option value="$PROJECT_DIR$/controllers/profit_controller.py" />
         <option value="$PROJECT_DIR$/templates/profit.html" />
         <option value="$PROJECT_DIR$/services/db/db_create_service.py" />
         <option value="$PROJECT_DIR$/services/db/connection_factory.py" />
@@ -140,6 +169,7 @@
         <option value="$PROJECT_DIR$/start.py" />
         <option value="$PROJECT_DIR$/templates/recommendation.html" />
         <option value="$PROJECT_DIR$/controllers/summary_analysis_recommendation_controller.py" />
+        <option value="$PROJECT_DIR$/controllers/profit_controller.py" />
       </list>
     </option>
   </component>
@@ -619,7 +649,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508194185623</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="bugfixes">
+      <created>1508194239319</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1508194239319</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -841,20 +878,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/profit_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/dummy_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/profit.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -908,13 +931,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
           <caret line="58" column="102" selection-start-line="58" selection-start-column="102" selection-end-line="58" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/industry_controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="60" column="85" selection-start-line="60" selection-start-column="85" selection-end-line="60" selection-end-column="85" />
         </state>
       </provider>
     </entry>
@@ -1033,6 +1049,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/dummy_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/industry_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="60" column="85" selection-start-line="60" selection-start-column="85" selection-end-line="60" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/profit_controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="47" selection-start-line="4" selection-start-column="47" selection-end-line="4" selection-end-column="47" />
           <folding />
         </state>
       </provider>
