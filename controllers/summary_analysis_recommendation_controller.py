@@ -15,11 +15,13 @@ class SummaryAnalysisRecommendationController:
 
     def dispatch(self,request):
         model = {}
+        ticker = None
 
-        try:
+        print(request.args)
+        if "ticker" in request.args:
             ticker = request.args["ticker"]
-        except Exception:
-            return redirect("/summary_analysis")
+        elif "tickers" in request.form:
+            ticker = request.form.get("tickers")
 
         if ticker is not None:
             foo , from_date, till_date = self.parameterService.init_params(self.time_frame)
@@ -47,3 +49,5 @@ class SummaryAnalysisRecommendationController:
                                    slope_and_rsquare_totals=slope_and_rsquare_totals,
                                    price_changes=price_changes,
                                    model=model)
+        else:
+            return render_template(self.template,ticker=None)

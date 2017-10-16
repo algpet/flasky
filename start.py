@@ -25,7 +25,7 @@ def add_header(r):
 def four_year_analysis():
     return summaryAnalysisController.dispatch(request)
 
-@app.route("/recommendation", methods=['GET'])
+@app.route("/recommendation", methods=['GET','POST'])
 def summaryAnalysisRecommendation():
     return summaryAnalysisRecommendationController.dispatch(request)
 

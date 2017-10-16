@@ -8,9 +8,10 @@
 {%endblock%}
 {% block content %}
     <div class="panel panel-default">
-        <div class="panel-body">
-            <form method="post">
-                <div class="panel">
+        <div class="row panel-body">
+            <div class="col-lg-3">
+                <form method="post">
+
                     <label for="tickers">Stock:</label>
                     <input name="tickers" id="tickers" value="{{tickers or ''}}">
 
@@ -21,9 +22,13 @@
                     <input name="till_date" id="till_date"  type="date" value="{{till_date}}" hidden>
 
                     <button name="submit" >Fetch!</button>
-                </div>
-            </form>
-            <br>
+                </form>
+            </div>
+            {% if price_changes is not none %}
+            <div class="col-lg-6">
+                <a href = "recommendation?ticker={{tickers}}"><h4>Check out some of our prediction scenarios for an in-depth view on the price</h4></a>
+            </div>
+            {%endif%}
         </div>
     </div>
 
@@ -71,10 +76,6 @@
                         <th>Downward Price based on a year</th>
                     </tr>
                 </table>
-            </div>
-
-            <div class="panel panel-default col-lg-6">
-                <a href = "recommendation?ticker={{tickers}}"><h4>Check out some of our prediction scenarios for an in-depth view on the price</h4></a>
             </div>
 
         {% endif %}
