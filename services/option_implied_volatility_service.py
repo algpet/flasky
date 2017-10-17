@@ -33,9 +33,9 @@ class OptionImpliedVolatilityService:
 
 
     def impliedCallVolatility(self, underlyingPrice, exercisePrice, days, targetPrice, interest, dividend):
-        interest /= 100
-        dividend /= 100
-        time =  days/365
+        interest /= 100.0
+        dividend /= 100.0
+        time =  days/(365 * 1.0)
 
         return self.optionSuggestionService.impliedCallVolatility(underlyingPrice, exercisePrice, time, targetPrice, interest, dividend)
 

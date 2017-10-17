@@ -130,27 +130,31 @@ class OptionSuggestionService:
         dTwo = self.dTwo(underlyingPrice, exercisePrice, time, volatility, interest, dividend)
         return - 0.01 * exercisePrice * time * math.exp(-interest * time) * (1 - norm.cdf(dTwo))
 
+    def avg(self,high,low):
+        return (high + low) / 2.0
+
     def impliedCallVolatility(self, underlyingPrice, exercisePrice, time, targetPrice, interest, dividend):
         high = 5
         low = 0
 
-        print(underlyingPrice, exercisePrice, time, targetPrice, interest, dividend)
-
         while (high - low) > 0.0001:
-            if self.callOption(underlyingPrice, exercisePrice, time, (high + low) / 2, interest,dividend) > targetPrice:
-                high = (high + low) / 2
+            median = self.avg(high,low)
+            if self.callOption(underlyingPrice, exercisePrice, time, median, interest,dividend) > targetPrice:
+                high = median
             else:
-                low = (high + low) / 2
-        return (high + low) / 2
+                low = median
+        return median
+
 
     def impliedPutVolatility(self, underlyingPrice, exercisePrice, time, targetPrice, interest, dividend):
         high = 5
         low = 0
 
         while(high - low ) > 0.0001:
-            if self.putOption(underlyingPrice, exercisePrice, time, (high + low) / 2, interest,  dividend) > targetPrice:
-                high = (high + low) / 2
+            median = self.avg(high, low)
+            if self.putOption(underlyingPrice, exercisePrice, time, median, interest,  dividend) > targetPrice:
+                high = median
             else:
-                low = (high + low) / 2
-        return (high + low) / 2
+                low = median
+        return median
 

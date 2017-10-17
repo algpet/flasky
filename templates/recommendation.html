@@ -48,7 +48,7 @@
                 {% else %}
                     decreased
                 {% endif %}
-                from <b>{{model["past9month_start_closeprice"] |round(2, 'floor')  }} to {{model["past9month_finish_closeprice"]|round(2, 'floor')}}</b>.
+                from <b>${{model["past9month_start_closeprice"] |round(2, 'floor')  }} to ${{model["past9month_finish_closeprice"]|round(2, 'floor')}}</b>.
             </p>
 
             <p>
@@ -56,13 +56,13 @@
                 we see that it is <b>{{bullish_vs_bearish_totals.iloc[1]["%past_bullish"]|round(2, 'floor')}}%</b> bullish.
             </p>
             <p>
-                The price from the 9 month mark <b>{{model["past9month_finish_closeprice"]|round(2, 'floor')}}</b>,
+                The price from the 9 month mark <b>${{model["past9month_finish_closeprice"]|round(2, 'floor')}}</b>,
                 {% if model["past9month_finish_closeprice"] < model["past1year_finish_closeprice"] %}
                     increased
                 {% else %}
                     decreased
                 {% endif %}
-                to <b>{{model["past1year_finish_closeprice"]|round(2, 'floor')}}</b>, <b>{{model["past1year_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
+                to <b>${{model["past1year_finish_closeprice"]|round(2, 'floor')}}</b>, <b>{{model["past1year_timeframe_finish"].strftime('%Y-%m-%d')}}</b>
             </p>
 
             <p>
@@ -70,13 +70,13 @@
                     we see that it is <b>{{bullish_vs_bearish_totals.iloc[2]["%past_bullish"] |round(2, 'floor') }}%</b> bullish.
             </p>
             <p>
-                The price from 1 year mark <b>{{model["past1year_finish_closeprice"]|round(2, 'floor')}}</b>,
+                The price from 1 year mark <b>${{model["past1year_finish_closeprice"]|round(2, 'floor')}}</b>,
                 {% if model["past1year_finish_closeprice"] < model["last_close"] %}
                     increased
                 {% else %}
                     decreased
                 {% endif %}
-                to <b>{{model["last_close"]|round(2, 'floor')}}</b> todays price
+                to <b>${{model["last_close"]|round(2, 'floor')}}</b> todays price
             </p>
 
 
@@ -240,15 +240,15 @@
                     <li>
                         By the end of 30 days
                         <ul>
-                            <li>Highest = {{price_changes['expected_monthly_grow']}}</li>
-                            <li>Lowest = {{price_changes['expected_monthly_drop']}}</li>
+                            <li>Highest = <b>${{price_changes['expected_monthly_grow']}}</b></li>
+                            <li>Lowest = <b>${{price_changes['expected_monthly_drop']}}</b></li>
                         </ul>
                     </li>
                     <li>
                         By the end of year
                         <ul>
-                            <li>Highest = {{price_changes['expected_yearly_grow']}}</li>
-                            <li>Lowest = {{price_changes['expected_yearly_drop']}}</li>
+                            <li>Highest = <b>${{price_changes['expected_yearly_grow']}}</b></li>
+                            <li>Lowest = <b>${{price_changes['expected_yearly_drop']}}</b></li>
                         </ul>
                     </li>
                 </ul>
