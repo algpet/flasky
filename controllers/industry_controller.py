@@ -57,6 +57,8 @@ class IndustryController:
         visitor = self.get_visitor(request)
         template_code = self.industryCrosstableDefaultTemplateService.get_template_owner()
         template_owner = self.visitorDbService.getByIp(template_code)
+        if visitor is None:
+            visitor = self.visitorDbService.create(request.remote_addr)
 
         print("visitor",visitor,"temp code",template_code,"temp owner",template_owner)
 
