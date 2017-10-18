@@ -35,7 +35,6 @@ class IndustryCrosstableService:
 
 
     def get_template(self,from_visitor,to_visitor):
-        print("start get template",from_visitor,to_visitor)
         user_id = None
         if to_visitor is not None:
             own = self.get_by_user(to_visitor)
@@ -44,8 +43,6 @@ class IndustryCrosstableService:
                 return own
         else:
             to_visitor = self.v
-
-        print("user_id for = ",user_id)
 
         template_industries,template_industry_relations,template_crosstable = self.get_by_user(from_visitor)
 
