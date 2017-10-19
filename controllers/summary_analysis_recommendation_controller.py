@@ -17,10 +17,10 @@ class SummaryAnalysisRecommendationController:
         model = {}
         ticker = None
 
-        if "ticker" in request.args:
-            ticker = request.args["ticker"]
-        elif "tickers" in request.form:
+        if "tickers" in request.form:
             ticker = request.form.get("tickers")
+        elif "ticker" in request.args:
+            ticker = request.args["ticker"]
 
         if ticker is not None:
             foo , from_date, till_date = self.parameterService.init_params(self.time_frame)
