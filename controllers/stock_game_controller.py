@@ -31,9 +31,8 @@ class StockGameController:
         return self.dispatch(request)
 
     def dispatch(self, request):
-        visitor_id = self.get_visitor(request)
-        visitor_tickers = self.stockGameDbService.getByVisitor(visitor_id)
-
+        visitor = self.get_visitor(request)
+        visitor_tickers = self.stockGameDbService.getByVisitor(visitor)
         ticker_data = self.stockGameService.get_for_tickers(visitor_tickers)
         return render_template(self.template,ticker_data=ticker_data)
 
@@ -45,7 +44,3 @@ class StockGameController:
     def get_visitor(self,request):
         ip = request.remote_addr
         return self.visitorDbService.getByIp(ip)
-
-    def get_visitor_tickers(self,visitor):
-        print(self.dummy_db)
-        return self.dummy_db

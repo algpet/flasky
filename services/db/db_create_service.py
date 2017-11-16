@@ -12,7 +12,7 @@ class CreateDbService:
             self.db = sqlite3.connect("../db/flaskysqlite.db")
             self.db_available = True
 
-            sqls = self.sql2() + self.sql2()
+            sqls = self.sql2()
             for sql in sqls:
                 result = self.db.execute(sql)
                 print(sql,result)
@@ -59,8 +59,10 @@ class CreateDbService:
 
     def sql2(self):
         return [
-            "CREATE TABLE stock_game_ticker(id integer PRIMARY KEY,name text NOT NULL,user_id integer)",
-            "CREATE INDEX stock_game_user_id ON industries(user_id,name)"
+            #"CREATE TABLE stock_game_ticker(id integer PRIMARY KEY,name text NOT NULL,user_id integer)",
+            #"CREATE INDEX stock_game_user_id ON industries(user_id,name)",
+            "DELETE FROM visitors",
+            "DELETE  FROM stock_game_ticker"
         ]
 
 

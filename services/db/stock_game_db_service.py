@@ -21,7 +21,8 @@ class StockGameDbService:
     def getByVisitor(self,visitor,connection=None):
         if connection is None:
             connection = self.connectionFactory.get_connection()
-
+        if visitor is None:
+            return []
         stock_game_tickers = self.utils.get_as_dictionary_list(connection=connection,sql=self.SQLgetByVisitor,params=(visitor['id'],))
         return stock_game_tickers
 
