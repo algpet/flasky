@@ -6,7 +6,7 @@ from context_builder import application_context_builder
 app = Flask(__name__)
 
 rawDataController , summaryAnalysisController , summaryAnalysisRecommendationController, predictionController , \
-downloadController, optionsController, profitController , industryController = application_context_builder()
+downloadController, optionsController, profitController , industryController, stockGameController = application_context_builder()
 
 """""
 @app.after_request
@@ -81,10 +81,21 @@ def industry_subscribe():
 def industry_unsubscribe():
     return industryController.unsubscribe(request)
 
-
 @app.route("/raw_data", methods=['GET', 'POST'])
 def raw_requests():
     return rawDataController.dispatch(request)
+
+@app.route("/stock_game", methods=['GET', 'POST'])
+def stock_game():
+    return stockGameController.dispatch(request)
+
+@app.route('/stock_game/add', methods=['POST'])
+def stock_game_add():
+    return stockGameController.add(request)
+
+@app.route('/stock_game/delete', methods=['GET'])
+def stock_game_delete():
+    return stockGameController.delete(request)
 
 
 if __name__ == "__main__":

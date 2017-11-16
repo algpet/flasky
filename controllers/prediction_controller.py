@@ -28,6 +28,6 @@ class PredictionController:
                 ticker_data = self.tickerRateService.get_rate(tickers, from_date, till_date)
                 if ticker_data is not None:
                     ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
-                    test_img1,test_img2,final_prices = self.priceChangeSimulationService.simmulate_price_change(ticker_data,weeks=weeks_to_simul)
+                    test_img1,test_img2,final_prices = self.priceChangeSimulationService.get_simmulation_plots(ticker_data,weeks=weeks_to_simul)
 
         return render_template(self.template, tickers=tickers, from_date=from_date, till_date=till_date,test_img1=test_img1,test_img2=test_img2,final_prices=final_prices,selected_week=weeks_to_simul)

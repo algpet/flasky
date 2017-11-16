@@ -16,10 +16,13 @@
 
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 
+        <META NAME="Description" CONTENT="Stock Analytics, Predictive Metrics, Price Recommendations and Machine Learning from RJG Options.">
+        <META NAME="Keywords" CONTENT="predictive analytics, predictive modeling, data, predictive stock analytics, machine learning, options, put, call, recommended stock price, bullish, bearish, regression">
+
         <title>{% block title %}{% endblock %}</title>
         {% endblock %}
     </head>
-    <body background="https://ak5.picdn.net/shutterstock/videos/1658731/thumb/1.jpg">
+    <body background="http://trueimpex.com/wp-content/uploads/2016/07/black-background-image-004.jpg">
 
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
@@ -55,13 +58,6 @@
                             </a>
                         </li>
 
-                        <!--
-                        <li {% block active4 %}{% endblock %}>
-                            <a href="/download" role="button">
-                                Downloadable
-                            </a>
-                        </li>
-                        -->
 
                         <li {% block industry_active %}{% endblock %}>
                             <a href="/industry" role="button">
@@ -73,6 +69,12 @@
                         <li {% block raw_data_active %}{% endblock %}>
                             <a href="/raw_data" role="button">
                                 Raw Data
+                            </a>
+                        </li>
+
+                        <li {% block stock_game_active %}{% endblock %}>
+                            <a href="/stock_game" role="button">
+                                Stock game
                             </a>
                         </li>
 

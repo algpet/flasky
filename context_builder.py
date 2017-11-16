@@ -21,10 +21,12 @@ from services.option_suggestion_column_labeling_service import OptionSuggestionC
 
 from services.db.connection_factory import ConnectionFactory
 from services.db.utils import Utils
+from services.db.stock_game_db_service import StockGameDbService
 from services.db.industry_crosstable_db_service import IndustryDbService,IndustryRelationsDbService
 from services.db.visitor_db_service import VisitorDbService
 from services.industry_crosstable_service import IndustryCrosstableService
 from services.industry_crosstable_default_template_service import IndustryCrosstableDefaultTemplateService
+from services.stock_game_service import StockGameService
 
 from controllers.raw_data_controller import RawDataController
 from controllers.summary_analysis_controller import  SummaryAnalysisController
@@ -34,7 +36,7 @@ from controllers.download_controller import DownloadController
 from controllers.options_controller import OptionsController
 from controllers.profit_controller import ProfitController
 from controllers.industry_controller import IndustryController
-
+from controllers.stock_game_controller import StockGameController
 
 
 def application_context_builder():
@@ -52,6 +54,7 @@ def application_context_builder():
     connectionFactory = ConnectionFactory("db/flaskysqlite.db")
     db_utils = Utils()
 
+    stockGameDbService = StockGameDbService(connectionFactory,db_utils)
     visitorDbService = VisitorDbService(connectionFactory,db_utils)
     industryDbService = IndustryDbService(connectionFactory,db_utils)
     industryRelationsDbService = IndustryRelationsDbService(connectionFactory,db_utils)
@@ -82,5 +85,8 @@ def application_context_builder():
 
     industryController = IndustryController(industryCrosstableService,visitorDbService,industryCrosstableDefaultTemplateService,"industry.html")
 
+    stockGameService = StockGameService(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService,linearRegressionSerice)
+    stockGameController = StockGameController(stockGameService,stockGameDbService,visitorDbService,"stock_game.html")
+
     return rawDataController , summaryAnalysisController , summaryAnalysisRecommendationController,\
-           predictionController , downloadController,optionsController, profitController , industryController
+           predictionController , downloadController,optionsController, profitController , industryController, stockGameController

@@ -16,6 +16,7 @@ class LinearRegressionSerice:
         }
         pass
 
+
     def calculate_slope_and_rsquare(self,df,styling=True):
         period_data = {}
         for tag,period in self.periods.items():
@@ -25,18 +26,20 @@ class LinearRegressionSerice:
 
 
     def calculate_slope_and_rsquare_for_period(self,df,period=None):
-
         if period is not None:
             df = df[period[0]:period[1]]
         df = df.reindex(index=df.index[::-1])
         df['Days'] = (df.index - df.index[0]).days
-        return self.calculate_slope_and_rsquare_kernel(df,"Days","Close")
+        return self.calculate_slope_and_rsquare_for_dataframe(df,"Days","Close")
 
 
-    def calculate_slope_and_rsquare_kernel(self,df,x,y):
-        slope, intercept, r_value, p_value, std_err = stats.linregress(df[x], df[y])
-        return {"slope":slope , "r_squared":r_value ** 2}
+    def calculate_slope_and_rsquare_for_dataframe(self,df,x,y):
+        return self.calculate_slope_and_rsquare_kernel(df[x], df[y])
 
+
+    def calculate_slope_and_rsquare_kernel(self,x,y):
+        slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
+        return {"slope": slope, "r_squared": r_value ** 2}
 
     def pack_to_dataframe(self,period_data,styling=True):
         df_9month = pd.DataFrame({'slope': period_data['recent9month']['slope'],
@@ -60,6 +63,13 @@ class LinearRegressionSerice:
         styler = styler.apply(highlight_rsquare,subset=["r_squared"])
         return styler
 
+    def rsquare_group(self,v):
+        if v < 0.33:
+            return 0
+        elif v > 0.66:
+            return 2
+        else:
+            return 1
 
 
 def highlight_rsquare(x):
@@ -71,4 +81,5 @@ def highlight_rsquare(x):
             style.append('background-color: green')
         else:
             style.append('background-color: yellow')
-    return style
+    return
+
