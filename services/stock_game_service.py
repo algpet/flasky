@@ -1,5 +1,6 @@
 from pandas import DataFrame as pd
 import math
+import numpy as np
 
 class StockGameService:
 
@@ -49,12 +50,13 @@ class StockGameService:
                     "rs_measure":self.linearRegressionSerice.rsquare_group(lr_data["r_squared"]),
                     "delete_link":"<a href='/stock_game/delete?id={}'>delete</a>".format(ticker_id)
                 }
-
                 table.append(record)
 
         df = pd.from_records(table)
-        df = df.reindex_axis(["ticker", "start", "median", "high", "slope","abs_slope", "r_squared","rs_measure","delete_link"], axis=1)
         df = df.sort_values(by=['rs_measure', 'abs_slope'], ascending=[0, 0])
         df = df.reset_index(drop=True)
+        df = df.reset_index()
+        df = df.reindex_axis(["index","ticker", "start", "median", "high", "slope", "abs_slope", "r_squared", "rs_measure", "delete_link"],axis=1)
+        df["index"] += 1
 
         return df

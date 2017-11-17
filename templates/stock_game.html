@@ -11,7 +11,7 @@
     {% if ticker_data is not none %}
         <div class="row panel panel-default">
             <div class="panel-body">
-                {{ticker_data.to_html(classes="table",escape=False) | safe }}
+                {{ticker_data.to_html(classes="table",index=False,escape=False) | safe }}
             </div>
         </div>
     {% else %}
