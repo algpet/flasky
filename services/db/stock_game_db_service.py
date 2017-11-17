@@ -42,7 +42,7 @@ class StockGameDbService:
     def delete(self,id,connection=None):
         if connection is None:
             connection = self.connectionFactory.get_connection()
-        connection.execute(self.SQLdeleteTicker, (id))
+        connection.execute(self.SQLdeleteTicker, (id,))
         connection.commit()
 
 
