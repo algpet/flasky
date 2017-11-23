@@ -37,6 +37,18 @@ class StockGameService:
 
                 lr_data = self.linearRegressionSerice.calculate_slope_and_rsquare_kernel(simmul_data["weeks"],simmul_data["prices"])
 
+                slope_index = None
+                if lr_data["slope"] > 0:
+                    slope_index = 1
+                if lr_data["slope"] < 0:
+                    slope_index = -1
+
+                last_index = 0
+                if simmul_data['last'] > simmul_data['start']:
+                    last_index = (simmul_data['last'] - simmul_data['start']) / simmul_data['start']
+                elif simmul_data['last'] < simmul_data['start']:
+                    last_index = (simmul_data['start'] - simmul_data['last']) / simmul_data['start']
+
                 record = {
                     "id":ticker_id,
                     "ticker":ticker_name,
@@ -44,8 +56,10 @@ class StockGameService:
                     "low": simmul_data['low'],
                     "median": simmul_data['median'],
                     "high": simmul_data['high'],
+                    "last": simmul_data['last'],
                     "slope":lr_data["slope"],
-                    "abs_slope":math.fabs(lr_data["slope"]),
+                    "slope_index":slope_index,
+                    "last_index":last_index,
                     "r_squared": lr_data["r_squared"],
                     "rs_measure":self.linearRegressionSerice.rsquare_group(lr_data["r_squared"]),
                     "delete_link":"<a href='/stock_game/delete?id={}'>delete</a>".format(ticker_id)
@@ -53,10 +67,10 @@ class StockGameService:
                 table.append(record)
 
         df = pd.from_records(table)
-        df = df.sort_values(by=['rs_measure', 'abs_slope'], ascending=[0, 0])
+        df = df.sort_values(by=['rs_measure', 'slope_index','last_index'], ascending=[0, 0, 0])
         df = df.reset_index(drop=True)
         df = df.reset_index()
-        df = df.reindex_axis(["index","ticker", "start", "median", "high", "slope", "abs_slope", "r_squared", "rs_measure", "delete_link"],axis=1)
+        df = df.reindex_axis(["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"],axis=1)
         df["index"] += 1
 
         return df

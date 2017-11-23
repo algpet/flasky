@@ -27,8 +27,8 @@ class PriceChangeSimulationService:
 
     def get_simmulation_data(self, df, weeks=60):
         weeks_list, prices, three_week_volatility = self.calculate_simmulate_price_change(df, weeks)
-        start,low,median,high = self.calculate_prediction_stats(prices)
-        return {"start":start,"low":low,"median":median,"high":high,"weeks":weeks_list,"prices":prices}
+        start,low,median,high,last = self.calculate_prediction_stats(prices)
+        return {"start":start,"low":low,"median":median,"high":high,"last":last,"weeks":weeks_list,"prices":prices}
         #stage2_prices, lastw_mean, lastw_std = self.calculate_stdev(prices, three_week_volatility)
 
 
@@ -58,8 +58,9 @@ class PriceChangeSimulationService:
             if price > prediction_high:
                 prediction_high = price
         prediction_median = sum / len(prices)
+        prediction_last = prices[-1]
 
-        return prediction_start,prediction_low,prediction_median,prediction_high
+        return prediction_start,prediction_low,prediction_median,prediction_high,prediction_last
 
     def calculate_simmulate_price_change(self, df, weeks=60):
 
