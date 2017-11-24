@@ -1,15 +1,17 @@
 from pandas import DataFrame as pd
+from pandas.formats.style import Styler
 import math
 import numpy as np
 
 class StockGameService:
 
-    def __init__(self,parameterService,tickerRateService,ticketAnalysisService,priceChangeSimulationService,linearRegressionSerice):
+    def __init__(self,parameterService,tickerRateService,ticketAnalysisService,priceChangeSimulationService,linearRegressionSerice,rsquareHighlighter):
         self.parameterService = parameterService
         self.tickerRateService = tickerRateService
         self.ticketAnalysisService = ticketAnalysisService
         self.priceChangeSimulationService = priceChangeSimulationService
         self.linearRegressionSerice = linearRegressionSerice
+        self.rsquareHighlighter = rsquareHighlighter
         self.timeframe = 365
         self.weeks_to_simul = 51
 
@@ -19,7 +21,7 @@ class StockGameService:
 
 
     def get_for_tickers(self, tickers):
-        _ , from_date, till_date = self.parameterService.init_params(self.timeframe)
+        _, from_date, till_date = self.parameterService.init_params(self.timeframe)
 
         table = []
         for ticker_record in tickers:
@@ -72,5 +74,9 @@ class StockGameService:
         df = df.reset_index()
         df = df.reindex_axis(["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"],axis=1)
         df["index"] += 1
-
         return df
+
+    def apply_styling(self,df):
+        styler = Styler(df)
+        styler = styler.apply(self.rsquareHighlighter.highlight_rsquare,subset=["r_squared"])
+        return styler

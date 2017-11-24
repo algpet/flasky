@@ -7,8 +7,8 @@ from pandas.formats.style import Styler
 
 class LinearRegressionSerice:
 
-    def __init__(self):
-
+    def __init__(self,rsquareHighlighterService):
+        self.rsquareHighlighterService = rsquareHighlighterService
         self.periods = {
             "recent9month": [0, 189],
             "recent1year": [0, 251],
@@ -60,7 +60,7 @@ class LinearRegressionSerice:
 
     def apply_styling(self,df):
         styler = Styler(df)
-        styler = styler.apply(highlight_rsquare,subset=["r_squared"])
+        styler = styler.apply(self.rsquareHighlighterService.highlight_rsquare,subset=["r_squared"])
         return styler
 
     def rsquare_group(self,v):
@@ -72,14 +72,4 @@ class LinearRegressionSerice:
             return 1
 
 
-def highlight_rsquare(x):
-    style = []
-    for v in x:
-        if v < 0.33:
-            style.append('background-color: red')
-        elif v > 0.66:
-            style.append('background-color: green')
-        else:
-            style.append('background-color: yellow')
-    return
 

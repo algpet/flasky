@@ -4,6 +4,7 @@ matplotlib.use('Agg')
 import pandas as pd
 pd.set_option('display.max_colwidth', -1)
 
+from services.rsquare_highlighter import RSquareHighlighter
 from services.ticker_analysis_service import TickerAnalysisService
 from services.params_service import ParameterService
 from services.ticker_info_service import TickerInfoService
@@ -40,13 +41,15 @@ from controllers.stock_game_controller import StockGameController
 
 
 def application_context_builder():
+
     #tickerRateService = TickerRateService('google')
+    rsquareHighlighter = RSquareHighlighter()
     tickerRateService = TickerRateService('yahoo')
     tickerNameService = TickerInfoService('resources/secwiki_tickers.csv')
     parameterService = ParameterService(10)
     tickerAnalysisService = TickerAnalysisService()
     bullishVsBearishAnalysisService = BullishVsBearishAnalysisService()
-    linearRegressionSerice = LinearRegressionSerice()
+    linearRegressionSerice = LinearRegressionSerice(rsquareHighlighter)
     volatilityAnalysisService = VolatilityAnalysisService()
     plottingUtilService = PlottingUtilServce()
     optionSuggestionService = OptionSuggestionService()
@@ -85,7 +88,7 @@ def application_context_builder():
 
     industryController = IndustryController(industryCrosstableService,visitorDbService,industryCrosstableDefaultTemplateService,"industry.html")
 
-    stockGameService = StockGameService(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService,linearRegressionSerice)
+    stockGameService = StockGameService(parameterService,tickerRateService,tickerAnalysisService,priceChangeSimulationService,linearRegressionSerice,rsquareHighlighter)
     stockGameController = StockGameController(stockGameService,stockGameDbService,visitorDbService,"stock_game.html")
 
     return rawDataController , summaryAnalysisController , summaryAnalysisRecommendationController,\

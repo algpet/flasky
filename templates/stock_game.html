@@ -11,8 +11,45 @@
     {% if ticker_data is not none %}
         <div class="row panel panel-default">
             <div class="panel-body">
-                {{ticker_data.to_html(classes="table",index=False,escape=False) | safe }}
+
+                <table border="1" class="dataframe table">
+                    <thead>
+                        <th>index</th>
+                        <th>ticker</th>
+                        <th>start</th>
+                        <th>high</th>
+                        <th>last</th>
+                        <th>slope</th>
+                        <th>r_squared</th>
+                        <th>delete</th>
+                    </thead>
+                    {% for index, row in ticker_data.iterrows() %}
+                    <tr>
+                        <td>{{row["index"]}}</td>
+                        <td>{{row["ticker"]}}</td>
+                        <td>{{"{:.2f}".format(row["start"])}}</td>
+                        <td>{{"{:.2f}".format(row["high"])}}</td>
+                        <td>{{"{:.2f}".format(row["last"])}}</td>
+                        <td>{{"{:.4f}".format(row["slope"])}}</td>
+
+                        {% if row["r_squared"] > 0.66%}
+                            <td bgcolor="green">{{"{:.5f}".format(row["r_squared"])}}</td>
+                        {% else %}
+                            {% if row["r_squared"] < 0.33%}
+                                <td bgcolor="red">{{"{:.5f}".format(row["r_squared"])}}</td>
+                            {% else %}
+                                <td bgcolor="yellow">{{"{:.5f}".format(row["r_squared"])}}</td>
+                            {% endif %}
+                        {% endif %}
+
+                        <td>{{row["delete_link"] | safe }}</td>
+                    </tr>
+
+                    {% endfor %}
+                </table>
+
             </div>
+
         </div>
     {% else %}
         no data yet
