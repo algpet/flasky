@@ -68,12 +68,16 @@ class StockGameService:
                 }
                 table.append(record)
 
-        df = pd.from_records(table)
-        df = df.sort_values(by=['rs_measure', 'slope_index','last_index'], ascending=[0, 0, 0])
-        df = df.reset_index(drop=True)
-        df = df.reset_index()
-        df = df.reindex_axis(["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"],axis=1)
-        df["index"] += 1
+        if len(tickers) > 0:
+            df = pd.from_records(table)
+            df = df.sort_values(by=['rs_measure', 'slope_index','last_index'], ascending=[0, 0, 0])
+            df = df.reset_index(drop=True)
+            df = df.reset_index()
+            df = df.reindex_axis(["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"],axis=1)
+            df["index"] += 1
+        else:
+            df = pd(data = [], columns=["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"])
+
         return df
 
     def apply_styling(self,df):

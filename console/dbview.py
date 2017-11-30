@@ -9,8 +9,8 @@ connection = factory.get_connection()
 print(connection)
 
 sqls = [
-    "select * from visitors",
-    "select * from industries"
+    "select * from stock_game_ticker",
+    "update stock_game_ticker set user_id = -6 where user_id = 6"
 ]
 
 for sql in sqls:
