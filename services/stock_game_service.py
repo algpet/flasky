@@ -14,11 +14,8 @@ class StockGameService:
         self.rsquareHighlighter = rsquareHighlighter
         self.timeframe = 365
         self.weeks_to_simul = 51
-
         self.cache = {}
-
         pass
-
 
     def get_for_tickers(self, tickers):
         _, from_date, till_date = self.parameterService.init_params(self.timeframe)
@@ -75,8 +72,12 @@ class StockGameService:
             df = df.reset_index()
             df = df.reindex_axis(["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"],axis=1)
             df["index"] += 1
+            df.columns = ["rank", "ticker", "start", "high", "last", "slope", "r_squared", "delete_link"]
+
         else:
-            df = pd(data = [], columns=["index","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"])
+            df = pd(data = [], columns=["rank","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"])
+
+
 
         return df
 

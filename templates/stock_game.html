@@ -14,7 +14,7 @@
 
                 <table border="1" class="dataframe table">
                     <thead>
-                        <th>index</th>
+                        <th>rank</th>
                         <th>ticker</th>
                         <th>start</th>
                         <th>high</th>
@@ -25,7 +25,7 @@
                     </thead>
                     {% for index, row in ticker_data.iterrows() %}
                     <tr>
-                        <td>{{row["index"]}}</td>
+                        <td>{{row["rank"]}}</td>
                         <td>{{row["ticker"]}}</td>
                         <td>{{"{:.2f}".format(row["start"])}}</td>
                         <td>{{"{:.2f}".format(row["high"])}}</td>
