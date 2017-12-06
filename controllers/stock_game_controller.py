@@ -31,10 +31,16 @@ class StockGameController:
         return self.dispatch(request)
 
     def dispatch(self, request):
+        weeks = request.form.get("weeks")
+        if weeks is not None:
+            weeks = int(weeks)
+        else:
+            weeks = self.stockGameService.weeks_to_simul
+
         visitor = self.get_visitor(request)
         visitor_tickers = self.stockGameDbService.getByVisitor(visitor)
-        ticker_data = self.stockGameService.get_for_tickers(visitor_tickers)
-        return render_template(self.template,ticker_data=ticker_data)
+        ticker_data = self.stockGameService.get_for_tickers(visitor_tickers,weeks_to_simul=weeks)
+        return render_template(self.template,ticker_data=ticker_data,selected_week=weeks)
 
     def create_visitor(self,request):
         ip = request.remote_addr

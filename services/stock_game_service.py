@@ -17,8 +17,10 @@ class StockGameService:
         self.cache = {}
         pass
 
-    def get_for_tickers(self, tickers):
+    def get_for_tickers(self, tickers,weeks_to_simul=None):
         _, from_date, till_date = self.parameterService.init_params(self.timeframe)
+        if weeks_to_simul is None:
+            weeks_to_simul = self.weeks_to_simul
 
         table = []
         for ticker_record in tickers:
@@ -32,7 +34,7 @@ class StockGameService:
 
             if ticker_data is not None:
                 ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
-                simmul_data = self.priceChangeSimulationService.get_simmulation_data(ticker_data, weeks=self.weeks_to_simul)
+                simmul_data = self.priceChangeSimulationService.get_simmulation_data(ticker_data, weeks=weeks_to_simul)
 
                 lr_data = self.linearRegressionSerice.calculate_slope_and_rsquare_kernel(simmul_data["weeks"],simmul_data["prices"])
 

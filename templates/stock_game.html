@@ -12,6 +12,26 @@
         <div class="row panel panel-default">
             <div class="panel-body">
 
+                        <form id="gameweeks" method="post">
+                             Choose length:
+                            <select name="weeks" id="weeks" class="selectpicker" onchange="change();">
+                                {% for week in [6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51] %}
+                                     {%if week == selected_week%}
+                                        <option selected>{{week}}</option>
+                                    {% else %}
+                                        <option>{{week}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <!-- <button name="submit" >Simulate!</button> -->
+
+                        </form>
+                        <script>
+                            function change(){
+                                document.getElementById("gameweeks").submit();
+                            }
+                        </script>
+
                 <table border="1" class="dataframe table">
                     <thead>
                         <th>rank</th>
@@ -69,11 +89,15 @@
                         &nbsp
                     </td>
                     <td>
-                        <a href="/stock_game">refresh </a>
+
                     </td>
                 </tr>
             </table>
         </form>
+
+
+
+
      </div>
 {% endblock %}
 
