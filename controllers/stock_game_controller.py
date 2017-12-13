@@ -39,8 +39,16 @@ class StockGameController:
 
         visitor = self.get_visitor(request)
         visitor_tickers = self.stockGameDbService.getByVisitor(visitor)
-        ticker_data = self.stockGameService.get_for_tickers(visitor_tickers,weeks_to_simul=weeks)
-        return render_template(self.template,ticker_data=ticker_data,selected_week=weeks)
+
+        img_for = request.form.get("show_img")
+        for ticker in visitor_tickers:
+            if ticker['name'] == img_for:
+                break
+        else:
+            img_for = None
+
+        ticker_data,images = self.stockGameService.get_for_tickers(visitor_tickers,weeks_to_simul=weeks,img_for=img_for)
+        return render_template(self.template,ticker_data=ticker_data,images=images,selected_week=weeks,img_for=img_for)
 
     def create_visitor(self,request):
         ip = request.remote_addr

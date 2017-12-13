@@ -15,6 +15,7 @@
                         <form id="gameweeks" method="post" action="/stock_game">
                              Choose length:
                             <select name="weeks" id="weeks" class="selectpicker" onchange="change();">
+
                                 {% for week in [6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51] %}
                                      {%if week == selected_week%}
                                         <option selected>{{week}}</option>
@@ -23,6 +24,21 @@
                                     {% endif %}
                                 {% endfor %}
                             </select>
+                            View prediction for:
+                            <select name="show_img" id="show_img" class="selectpicker" onchange="change();">
+                                {% if img_for is none%}
+                                    <option selected>{{img_for}}</option>
+                                {% endif %}
+                                {%for index, row in ticker_data.iterrows()%}
+                                    {%if row["ticker"] == img_for %}
+                                        <option selected>{{row["ticker"]}}</option>
+                                    {% else %}
+                                        <option>{{row["ticker"]}}</option>
+                                    {% endif %}
+                                {%endfor%}
+
+                            </select>
+
                             <!-- <button name="submit" >Simulate!</button> -->
 
                         </form>
@@ -69,8 +85,8 @@
                 </table>
 
             </div>
-
         </div>
+
     {% else %}
         no data yet
     {% endif %}
@@ -89,15 +105,27 @@
                         &nbsp
                     </td>
                     <td>
-
                     </td>
                 </tr>
             </table>
         </form>
-
-
-
-
      </div>
+
+    {% if ticker_data is not none %}
+       <div class="panel-body" >
+            {% for row in images %}
+                <div class="panel panel-default">
+                    <h2>Predictive Simulation for the next year - <b>{{row['ticker']}}</b></h2>
+                    <img src="{{row['image1']}}" width="100%">
+                </div>
+                <div class="panel panel-default">
+                    <h2>Simulation of the price at Week {{selected_week}} for - <b>{{row['ticker']}}</b> </h2>
+                    <img src="{{row['image2']}}" width="100%">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
 {% endblock %}
 

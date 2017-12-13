@@ -25,10 +25,24 @@ class PriceChangeSimulationService:
 
     ######################
 
-    def get_simmulation_data(self, df, weeks=60):
+    def get_simmulation_data(self, df, weeks=60, plot=False):
+
+
         weeks_list, prices, three_week_volatility = self.calculate_simmulate_price_change(df, weeks)
         start,low,median,high,last = self.calculate_prediction_stats(prices)
-        return {"start":start,"low":low,"median":median,"high":high,"last":last,"weeks":weeks_list,"prices":prices}
+
+        if plot:
+            #self.plottingUtilService.clean_files("static/img/*.png")
+            plot1_filename = self.plottingUtilService.generate_filename("static/img/graph", ".png")
+            plot2_filename = self.plottingUtilService.generate_filename("static/img/graph", ".png")
+            stage2_prices, lastw_mean, lastw_std = self.calculate_stdev(prices, three_week_volatility)
+            self.draw_simul_plot(weeks_list, prices, plot1_filename)
+            self.draw_stdev_plot(stage2_prices, lastw_mean, lastw_std, plot2_filename)
+
+            return {"start": start, "low": low, "median": median, "high": high, "last": last, "weeks": weeks_list,
+                    "prices": prices,"image1":plot1_filename,"image2":plot2_filename}
+        else:
+            return {"start":start,"low":low,"median":median,"high":high,"last":last,"weeks":weeks_list,"prices":prices}
         #stage2_prices, lastw_mean, lastw_std = self.calculate_stdev(prices, three_week_volatility)
 
 

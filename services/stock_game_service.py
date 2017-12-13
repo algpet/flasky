@@ -17,12 +17,14 @@ class StockGameService:
         self.cache = {}
         pass
 
-    def get_for_tickers(self, tickers,weeks_to_simul=None):
+    def get_for_tickers(self, tickers,weeks_to_simul=None,img_for=None):
         _, from_date, till_date = self.parameterService.init_params(self.timeframe)
         if weeks_to_simul is None:
             weeks_to_simul = self.weeks_to_simul
 
         table = []
+        images = []
+
         for ticker_record in tickers:
             ticker_name = ticker_record['name']
             ticker_id = ticker_record['id']
@@ -34,7 +36,7 @@ class StockGameService:
 
             if ticker_data is not None:
                 ticker_data = self.ticketAnalysisService.analyze_dataframe(ticker_data)
-                simmul_data = self.priceChangeSimulationService.get_simmulation_data(ticker_data, weeks=weeks_to_simul)
+                simmul_data = self.priceChangeSimulationService.get_simmulation_data(ticker_data, weeks=weeks_to_simul,plot=(ticker_name==img_for))
 
                 lr_data = self.linearRegressionSerice.calculate_slope_and_rsquare_kernel(simmul_data["weeks"],simmul_data["prices"])
 
@@ -65,6 +67,10 @@ class StockGameService:
                     "rs_measure":self.linearRegressionSerice.rsquare_group(lr_data["r_squared"]),
                     "delete_link":"<a href='/stock_game/delete?id={}'>delete</a>".format(ticker_id)
                 }
+
+                if "image1" in simmul_data:
+                    images.append({"ticker":ticker_name,"image1":simmul_data["image1"],"image2":simmul_data["image2"]})
+
                 table.append(record)
 
         if len(tickers) > 0:
@@ -79,9 +85,7 @@ class StockGameService:
         else:
             df = pd(data = [], columns=["rank","ticker", "start", "high","last", "slope", "r_squared",  "delete_link"])
 
-
-
-        return df
+        return df,images
 
     def apply_styling(self,df):
         styler = Styler(df)
